@@ -79,8 +79,14 @@
       padding:8px;gap:8px;align-items:center}
     .adminFab button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;border:0;border-radius:10px;padding:8px 10px;font-weight:800;cursor:pointer}
     .adminFab .email{font-size:12px;color:#cfe0ff;margin-right:6px}
-  </style>
+  
+  .btn .btn-ico{width:18px;height:18px;display:inline-block;vertical-align:middle;border-radius:4px;background:#ffffffaa}
+  .btn .btn-ico img{width:18px;height:18px;display:block;border-radius:4px}
+</style>
 
+
+  .btn .btn-ico{width:18px;height:18px;display:inline-block;vertical-align:middle;border-radius:4px;background:#ffffffaa}
+  .btn .btn-ico img{width:18px;height:18px;display:block;border-radius:4px}
 </style>
 </head>
 <body>
@@ -163,7 +169,10 @@ grid.innerHTML = cards.map(([slug,title,note]) => `
       <h3>${title}</h3>
       <p>${note}</p>
       <div class="actions">
-        <a class="btn" data-proj-folder="${slug}" href="#"><span class="icon"></span> Ir al proyecto</a>
+        <a class="btn" data-proj-folder="${slug}" href="#">
+          <span class="btn-ico"><img src="thumbs/icons/${slug}.svg" alt="icono ${title}"/></span>
+          <span>Ir al proyecto</span>
+        </a>
         <a class="btn" href="#" onclick="alert('Abre el proyecto y presiona 🧩 Actividad o 🧠 Trivia.');return false;">❓ Ayuda</a>
         <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
       </div>
