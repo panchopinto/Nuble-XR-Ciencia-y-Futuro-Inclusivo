@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AR — Mapa Ñuble (Radar) — Ñuble XR</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <style>
+    body { margin:0; font-family:system-ui, Segoe UI, Roboto, Arial, sans-serif; background:#000; color:#fff }
+    .hud { position:fixed; left:10px; top:10px; background:rgba(0,0,0,.55); padding:10px 12px; border-radius:10px; font-size:13px }
+    .hud a { color:#7fe0ff; text-decoration:none; margin-right:8px }
+    .hint { position:fixed; bottom:14px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,.55); padding:8px 12px; border-radius:10px; font-size:13px }
+  </style>
+</head>
+<body>
+  <div class="hud">
+    <strong>AR — Mapa Ñuble (Radar)</strong><br/>
+    <a href="index.html">VR</a>
+    <a href="../../index.html">← Portada</a>
+  </div>
+  <div class="hint">Mueve el teléfono y toca para colocar el terreno.</div>
+
+  <a-scene xr-mode-ui="enabled: true"
+           webxr="optionalFeatures: hit-test, dom-overlay; overlayElement: .hud"
+           renderer="colorManagement: true; antialias: true"
+           background="color: #000"
+           vr-mode-ui="enabled: false">
+    <a-entity light="type: ambient; intensity: 0.7"></a-entity>
+    <a-entity light="type: directional; intensity: 1" position="0 1 0"></a-entity>
+
+    <a-entity id="anchor" visible="false"></a-entity>
+
+    <a-entity camera look-controls="enabled:false"></a-entity>
+  </a-scene>
+
+  <script>
+  // AR hit-test: tocar para colocar el terreno en el plano detectado
+  const sceneEl = document.querySelector('a-scene');
+  let placed = false;
+  sceneEl.addEventListener('loaded', () => {
+    const xr = sceneEl.renderer.xr;
+    sceneEl.addEventListener('click', () => {
+      if(placed) return;
+      const anchor = document.getElementById('anchor');
+      const terrain = document.createElement('a-entity');
+      terrain.setAttribute('obj-model', 'obj: url(assets/terrain.obj)');
+      terrain.setAttribute('material', 'src: url(assets/colormap.png); roughness:0.9; metalness:0.0');
+      terrain.setAttribute('scale','0.05 0.05 0.05');
+      terrain.setAttribute('rotation','-90 0 0');
+      anchor.appendChild(terrain);
+      anchor.setAttribute('visible','true');
+      placed = true;
+      document.querySelector('.hint').textContent = 'Terreno colocado. Puedes moverte alrededor.';
+    });
+  });
+  </script>
+</body>
+</html>

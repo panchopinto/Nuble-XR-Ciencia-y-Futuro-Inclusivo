@@ -1,53 +1,45 @@
 <!DOCTYPE html>
-<html lang="es"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Proyecto 1 — Mapa VR de Ñuble visto por radar (Sentinel‑1 + DEM)</title>
-<link rel="stylesheet" href="css/styles.css"/>
-<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Mapa VR Ñuble (Radar) — Ñuble XR</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <style>
-    * { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; }
-    img { -webkit-user-drag:none; -khtml-user-drag:none; -moz-user-drag:none; -o-user-drag:none; user-drag:none; pointer-events:none; }
+    body { margin:0; font-family:system-ui, Segoe UI, Roboto, Arial, sans-serif; background:#000; color:#fff }
+    .hud { position:fixed; left:10px; top:10px; background:rgba(0,0,0,.55); padding:10px 12px; border-radius:10px; font-size:13px }
+    .hud a { color:#7fe0ff; text-decoration:none; margin-right:8px }
   </style>
+</head>
+<body>
+  <div class="hud">
+    <strong>Proyecto 1 — Mapa VR Ñuble (Radar)</strong><br/>
+    <a href="../../index.html">← Portada</a>
+    <a href="ar.html">AR</a>
+  </div>
 
-</head><body>
-<a-scene renderer="antialias: true" background="color:#06121c">
-  <a-assets>
-    <img id="layer" src="assets/layer.png">
-  </a-assets>
-  <a-entity light="type: ambient; intensity: 0.9"></a-entity>
-  <a-entity light="type: directional; intensity: 0.8" position="0 2 1"></a-entity>
-  <a-entity position="-0.5 0 -1.5" rotation="-90 0 0">
-    <a-plane width="1" height="1" material="src:#layer"></a-plane>
-  </a-entity>
-  <a-entity camera wasd-controls look-controls position="0 1.6 0"></a-entity>
-</a-scene>
+  <a-scene renderer="colorManagement: true; antialias: true" background="color: #1a1a1a">
+    <!-- Luces -->
+    <a-entity light="type: ambient; intensity: 0.6"></a-entity>
+    <a-entity light="type: directional; intensity: 0.9" position="1 1 0"></a-entity>
 
-  <script>
-  // Desactivar clic derecho y combinaciones comunes de copiar/inspeccionar
-  document.addEventListener('contextmenu', e => e.preventDefault());
-  document.addEventListener('keydown', function(e) {
-    if ((e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.key === 'c' || e.key === 'C'))
-        || e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j'))) {
-      e.preventDefault();
-      e.stopPropagation();
-      alert("Acción deshabilitada en modo presentación.");
-      return false;
-    }
-  }, true);
-  </script>
+    <!-- Terreno OBJ -->
+    <a-entity id="terrain"
+              position="0 0 -20"
+              rotation="-20 0 0"
+              obj-model="obj: url(assets/terrain.obj)"
+              material="src: url(assets/colormap.png); roughness:0.9; metalness:0.0">
+    </a-entity>
 
+    <!-- Suelo y cielo -->
+    <a-entity geometry="primitive: circle; radius: 100" rotation="-90 0 0"
+              material="color: #0c0c10; roughness:1; metalness:0"></a-entity>
+    <a-sky color="#0c1016"></a-sky>
 
-  <script>
-    // Forzar que ninguna imagen sea "draggable" y bloquear arrastre/selección
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('img, video, canvas').forEach(el => {
-        el.setAttribute('draggable', 'false');
-      });
-      document.addEventListener('dragstart', e => e.preventDefault(), true);
-      document.addEventListener('selectstart', e => e.preventDefault(), true);
-      document.addEventListener('copy', e => { e.preventDefault(); alert('Acción deshabilitada en modo presentación.'); }, true);
-    });
-  </script>
-
-</body></html>
+    <!-- Cámara -->
+    <a-entity id="rig" position="0 6 20">
+      <a-entity camera look-controls wasd-controls="acceleration:20"></a-entity>
+    </a-entity>
+  </a-scene>
+</body>
+</html>
