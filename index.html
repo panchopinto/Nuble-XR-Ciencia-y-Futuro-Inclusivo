@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Ñuble XR — Ciencia y Futuro Inclusivo (PIE & PAES)</title>
+<style>
+  :root{
+    --bg:#0a1020; --panel:#0f1730; --ink:#eaf2ff; --muted:#a9b4d0;
+    --glass: rgba(255,255,255,0.06); --glass2: rgba(255,255,255,0.10);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 20% -10%, #1a2a6c22, transparent), radial-gradient(1000px 500px at 120% 20%, #b21f1f22, transparent), var(--bg); color:var(--ink); font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}
+  header{position:sticky;top:0;background:linear-gradient(180deg, #0a1020ee, #0a1020aa, transparent);backdrop-filter: blur(6px);border-bottom:1px solid #1e2a44;z-index:10}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px}
+  .hero{padding:28px 20px 8px}
+  .title{font-weight:800;letter-spacing:.2px;font-size:28px;margin:0 0 6px}
+  .subtitle{margin:0;color:var(--muted)}
+  .badges{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+  .badge{background:linear-gradient(135deg, #1f2a44, #152038);border:1px solid #263454;border-radius:999px;padding:6px 12px;font-size:12px;color:#cfe0ff}
+
+  .toggle-row{display:flex;align-items:center;gap:10px;margin-top:12px}
+  .toggle-btn{display:inline-block;background:#34D399;color:#0b1020;font-weight:700;padding:8px 12px;border-radius:10px;border:1px solid #ffffff66;cursor:pointer;box-shadow:0 6px 16px #00000055}
+
+  #collab-note{margin:15px 0;padding:12px;background:#111a2e;border:1px solid #1e2a44;border-radius:10px;color:#cfe0ff}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;padding:20px}
+  .card{background:var(--glass);border:1px solid #223054;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px #00000050;transition:transform .2s ease, box-shadow .2s ease;position:relative}
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 40px #00000070}
+  .top{position:relative}
+  .thumb{width:100%;height:150px;object-fit:cover;display:block;filter:saturate(1.1) contrast(1.05)}
+  .icon{position:absolute;top:10px;left:10px;width:42px;height:42px;filter:drop-shadow(0 6px 10px #0008)}
+  .card-body{padding:14px}
+  .card h3{margin:4px 0 8px;font-size:18px}
+  .card p{margin:0;color:var(--muted);min-height:36px}
+  .actions{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg, #8bdcff, #ffffff33); color:#0a1020; font-weight:700; padding:10px 14px; border-radius:12px; border:1px solid #ffffff88; text-decoration:none; box-shadow:inset 0 0 0 1px #00000022, 0 6px 16px #00000055; transition: transform .15s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-icon{width:16px;height:16px;background:conic-gradient(from 0deg, #6EE7F9, #A78BFA, #F472B6, #34D399, #FBBF24, #60A5FA, #6EE7F9);border-radius:50%}
+  .tags span{display:inline-block;background:var(--glass2); border:1px solid #2a3a60; padding:6px 10px; border-radius:999px; font-size:11px; color:#cfe0ff; margin-left:6px}
+  footer{padding:30px 20px;color:#95a4c7;text-align:center}
+  .howto{background:var(--glass);border:1px solid #223054;border-radius:16px;padding:16px;margin:24px 20px}
+  code{background:#00000033;padding:2px 6px;border-radius:6px;border:1px solid #ffffff25}
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <h1 class="title">Ñuble XR — Ciencia y Futuro Inclusivo (PIE & PAES)</h1>
+      <p class="subtitle">Portafolio unificado con 10 proyectos en VR/AR/3D + scripts de procesamiento (Sentinel‑1/DEM).</p>
+      <div class="badges">
+        <span class="badge">10 proyectos</span>
+        <span class="badge">WebXR</span>
+        <span class="badge">PIE & PAES</span>
+        <span class="badge">Listos para clase</span>
+      </div>
+
+      <div id="collab-note">
+        Este proyecto es desarrollado en colaboración con Belén Acuña, profesional del PIE, en la Sala SEM Tecnológica del Liceo (luces, 2 estaciones HTC de VR, pantalla táctil gigante y 15 Oculus Quest 2).
+      </div>
+      <div class="toggle-row">
+        <button class="toggle-btn" onclick="toggleNote()">Mostrar/Ocultar nota de colaboración</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="grid">
+      
+      <article class="card">
+        <div class="top">
+          
+    <svg class="icon" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#6EE7F9"/>
+          <stop offset="50%" stop-color="#A78BFA"/>
+          <stop offset="100%" stop-color="#F472B6"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="28" fill="url(#g1)" opacity="0.9"/>
+      <path d="M20 36 L32 20 L44 36 L38 36 L38 46 L26 46 L26 36 Z" fill="#ffffffcc"/>
+    </svg>
+    
+          <img src="thumbs/nuble-mapa-radar-vr.png" alt="1. Mapa VR Ñuble (Radar)" class="thumb"/>
+        </div>
+        <div class="card-body">
+          <h3>1. Mapa VR Ñuble (Radar)</h3>
+          <p>PIE: contrastes radar ↔ visión; PAES: lectura de capas.</p>
+          <div class="actions">
+            <a class="btn" href="projects/nuble-mapa-radar-vr_starter.zip">
+              <span class="btn-icon"></span> Descargar .zip
+            </a>
+            <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="top">
+          
+    <svg class="icon" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#34D399"/>
+          <stop offset="50%" stop-color="#FBBF24"/>
+          <stop offset="100%" stop-color="#60A5FA"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="28" fill="url(#g2)" opacity="0.9"/>
+      <path d="M20 36 L32 20 L44 36 L38 36 L38 46 L26 46 L26 36 Z" fill="#ffffffcc"/>
+    </svg>
+    
+          <img src="thumbs/nuble-inundaciones-vr.png" alt="2. Inundaciones y crecidas" class="thumb"/>
+        </div>
+        <div class="card-body">
+          <h3>2. Inundaciones y crecidas</h3>
+          <p>PIE: iconos grandes; PAES: interpretación de inundación.</p>
+          <div class="actions">
+            <a class="btn" href="projects/nuble-inundaciones-vr_starter.zip">
+              <span class="btn-icon"></span> Descargar .zip
+            </a>
+            <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="top">
+          
+    <svg class="icon" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FCA5A5"/>
+          <stop offset="50%" stop-color="#4ADE80"/>
+          <stop offset="100%" stop-color="#F59E0B"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="28" fill="url(#g3)" opacity="0.9"/>
+      <path d="M20 36 L32 20 L44 36 L38 36 L38 46 L26 46 L26 36 Z" fill="#ffffffcc"/>
+    </svg>
+    
+          <img src="thumbs/nuble-incendios-vr.png" alt="3. Incendios y recuperación" class="thumb"/>
+        </div>
+        <div class="card-body">
+          <h3>3. Incendios y recuperación</h3>
+          <p>PIE: paleta accesible; PAES: severidad y recuperación.</p>
+          <div class="actions">
+            <a class="btn" href="projects/nuble-incendios-vr_starter.zip">
+              <span class="btn-icon"></span> Descargar .zip
+            </a>
+            <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="top">
+          
+    <svg class="icon" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#93C5FD"/>
+          <stop offset="50%" stop-color="#A78BFA"/>
+          <stop offset="100%" stop-color="#F472B6"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="28" fill="url(#g4)" opacity="0.9"/>
+      <path d="M20 36 L32 20 L44 36 L38 36 L38 46 L26 46 L26 36 Z" fill="#ffffffcc"/>
+    </svg>
+    
+          <img src="thumbs/nuble-cambio-uso-vr.png" alt="4. Cambio de uso de suelo" class="thumb"/>
+        </div>
+        <div class="card-body">
+          <h3>4. Cambio de uso de suelo</h3>
+          <p>PIE: cambio ON/OFF; PAES: análisis temporal ΔdB.</p>
+          <div class="actions">
+            <a class="btn" href="projects/nuble-cambio-uso-vr_starter.zip">
+              <span class="btn-icon"></span> Descargar .zip
+            </a>
+            <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="top">
+          
+    <svg class="icon" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="g5" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FBBF24"/>
+          <stop offset="50%" stop-color="#60A5FA"/>
+          <stop offset="100%" stop-color="#6EE7F9"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="28" fill="url(#g5)" opacity="0.9"/>
+      <path d="M20 36 L32 20 L44 36 L38 36 L38 46 L26 46 L26 36 Z" fill="#ffffffcc"/>
+    </svg>
+    
+          <img src="thumbs/nuble-costas-humedales-vr.png" alt="5. Costas y humedales" class="thumb"/>
+        </div>
+        <div class="card-body">
+          <h3>5. Costas y humedales</h3>
+          <p>PIE: texto claro; PAES: dinámica de playa y humedales.</p>
+          <div class="actions">
+            <a class="btn" href="projects/nuble-costas-humedales-vr_starter.zip">
+              <span class="btn-icon"></span> Descargar .zip
+            </a>
+            <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="top">
+          
+    <svg class="icon" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="g6" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#4ADE80"/>
+          <stop offset="50%" stop-color="#F59E0B"/>
+          <stop offset="100%" stop-color="#FCA5A5"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="28" fill="url(#g6)" opacity="0.9"/>
+      <path d="M20 36 L32 20 L44 36 L38 36 L38 46 L26 46 L26 36 Z" fill="#ffffffcc"/>
+    </svg>
+    
+          <img src="thumbs/nuble-insar-vr.png" alt="6. InSAR deformación sísmica" class="thumb"/>
+        </div>
+        <div class="card-body">
+          <h3>6. InSAR deformación sísmica</h3>
+          <p>PIE: leyendas simples; PAES: franjas y desplazamientos.</p>
+          <div class="actions">
+            <a class="btn" href="projects/nuble-insar-vr_starter.zip">
+              <span class="btn-icon"></span> Descargar .zip
+            </a>
+            <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="top">
+          
+    <svg class="icon" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="g7" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#60A5FA"/>
+          <stop offset="50%" stop-color="#6EE7F9"/>
+          <stop offset="100%" stop-color="#34D399"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="28" fill="url(#g7)" opacity="0.9"/>
+      <path d="M20 36 L32 20 L44 36 L38 36 L38 46 L26 46 L26 36 Z" fill="#ffffffcc"/>
+    </svg>
+    
+          <img src="thumbs/nuble-maritimo-vr-ar.png" alt="7. Tráfico marítimo / Acuicultura" class="thumb"/>
+        </div>
+        <div class="card-body">
+          <h3>7. Tráfico marítimo / Acuicultura</h3>
+          <p>PIE: AR colaborativa; PAES: detección (CFAR simple).</p>
+          <div class="actions">
+            <a class="btn" href="projects/nuble-maritimo-vr-ar_starter.zip">
+              <span class="btn-icon"></span> Descargar .zip
+            </a>
+            <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="top">
+          
+    <svg class="icon" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="g8" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#A78BFA"/>
+          <stop offset="50%" stop-color="#F472B6"/>
+          <stop offset="100%" stop-color="#FCA5A5"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="28" fill="url(#g8)" opacity="0.9"/>
+      <path d="M20 36 L32 20 L44 36 L38 36 L38 46 L26 46 L26 36 Z" fill="#ffffffcc"/>
+    </svg>
+    
+          <img src="thumbs/andes-glaciares-vr-ar.png" alt="8. Glaciares e hídrica" class="thumb"/>
+        </div>
+        <div class="card-body">
+          <h3>8. Glaciares e hídrica</h3>
+          <p>PIE: leyenda de cambio; PAES: hipsometría ↔ agua.</p>
+          <div class="actions">
+            <a class="btn" href="projects/andes-glaciares-vr-ar_starter.zip">
+              <span class="btn-icon"></span> Descargar .zip
+            </a>
+            <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="top">
+          
+    <svg class="icon" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="g9" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#F59E0B"/>
+          <stop offset="50%" stop-color="#34D399"/>
+          <stop offset="100%" stop-color="#93C5FD"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="28" fill="url(#g9)" opacity="0.9"/>
+      <path d="M20 36 L32 20 L44 36 L38 36 L38 46 L26 46 L26 36 Z" fill="#ffffffcc"/>
+    </svg>
+    
+          <img src="thumbs/nuble-energia-riesgos-vr-ar.png" alt="9. Energía y riesgos" class="thumb"/>
+        </div>
+        <div class="card-body">
+          <h3>9. Energía y riesgos</h3>
+          <p>PIE: categorías nítidas; PAES: criterios de riesgo/energía.</p>
+          <div class="actions">
+            <a class="btn" href="projects/nuble-energia-riesgos-vr-ar_starter.zip">
+              <span class="btn-icon"></span> Descargar .zip
+            </a>
+            <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="top">
+          
+    <svg class="icon" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="g10" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#6EE7F9"/>
+          <stop offset="50%" stop-color="#FBBF24"/>
+          <stop offset="100%" stop-color="#A78BFA"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="28" fill="url(#g10)" opacity="0.9"/>
+      <path d="M20 36 L32 20 L44 36 L38 36 L38 46 L26 46 L26 36 Z" fill="#ffffffcc"/>
+    </svg>
+    
+          <img src="thumbs/nuble-agri-inteligente-vr-ar.png" alt="10. Agricultura inteligente" class="thumb"/>
+        </div>
+        <div class="card-body">
+          <h3>10. Agricultura inteligente</h3>
+          <p>PIE: leyenda de anomalía; PAES: priorización de riego.</p>
+          <div class="actions">
+            <a class="btn" href="projects/nuble-agri-inteligente-vr-ar_starter.zip">
+              <span class="btn-icon"></span> Descargar .zip
+            </a>
+            <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
+          </div>
+        </div>
+      </article>
+    
+    </section>
+
+    <section class="howto">
+      <h2>Cómo usar</h2>
+      <ol>
+        <li>Descarga un .zip y descomprímelo.</li>
+        <li>Abre <code>web/index.html</code> (VR) o <code>web/ar.html</code> (cuando esté).</li>
+        <li>Ejecuta los scripts en <code>/scripts</code> para generar tus propias capas con Sentinel‑1/DEM.</li>
+      </ol>
+      <p><strong>Nota:</strong> Los proyectos son educativos; no reemplazan estudios técnicos.</p>
+    </section>
+  </main>
+
+  <footer>© Ñuble XR — Ciencia y Futuro Inclusivo · Hecho con ❤️ para educación</footer>
+
+  <script>
+  function toggleNote(){
+    const note = document.getElementById('collab-note');
+    note.style.display = (note.style.display === 'none') ? 'block' : 'none';
+  }
+  </script>
+</body>
+</html>
