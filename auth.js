@@ -40,3 +40,8 @@ const Gate = {
 };
 
 document.addEventListener("DOMContentLoaded", ()=>Gate.init());
+
+
+/* Exponer CONFIG para la página de acciones (solo lectura) */
+window.NXR_CONFIG = CONFIG;
+window.NXR_Gate = Gate;

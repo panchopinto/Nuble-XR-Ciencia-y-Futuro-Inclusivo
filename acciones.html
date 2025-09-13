@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Acciones — Ñuble XR</title>
+<link rel="stylesheet" href="projects_pages/shared.css"/>
+<script src="auth.js" defer></script>
+<style>
+.card{background:#101a34;border:1px solid #223054;border-radius:14px;padding:18px;margin:14px 0;color:#cfe0ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+input,textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #2a3a60;background:#0b1328;color:#eaf2ff}
+button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;border:none;border-radius:10px;padding:10px 14px;cursor:pointer;box-shadow:0 6px 16px #000a}
+.small{font-size:12px;color:#9db0d6}
+pre{white-space:pre-wrap;word-break:break-all;background:#0b1328;border:1px solid #2a3a60;border-radius:10px;padding:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Acciones — Ñuble XR</h1>
+  <p class="muted">Herramientas rápidas para demo y administración (local). Requiere acceso.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>1) Mostrar / Ocultar nota de colaboración</h3>
+      <p class="small">Esto alterna el bloque con información de Belén y la Sala SEM en la portada.</p>
+      <button onclick="toggleNote()">Alternar Nota</button>
+    </div>
+
+    <div class="card">
+      <h3>2) Seguridad de sesión</h3>
+      <p class="small">Forzar cierre de sesión o recargar con bloqueo.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button onclick="logout()">Cerrar sesión</button>
+        <button onclick="relock()">Bloquear y recargar</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>3) Probar hash SHA‑256 de un código</h3>
+      <p class="small">Escribe un código de acceso para obtener su hash. Útil para actualizar <code>auth.js</code>.</p>
+      <input id="code" type="text" placeholder="Escribe el código (ej. PanchoPintoYBelenAcuna)"/>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button onclick="hashCode()">Generar hash</button>
+        <button onclick="copyHash()">Copiar</button>
+      </div>
+      <p class="small" style="margin-top:8px">Hash (SHA‑256):</p>
+      <pre id="hashout"></pre>
+    </div>
+
+    <div class="card">
+      <h3>4) Configuración actual</h3>
+      <p class="small">Correos permitidos y hash activo según <code>auth.js</code>.</p>
+      <pre id="confout"></pre>
+      <div style="margin-top:8px">
+        <a class="btn" href="index.html">← Volver al inicio</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function sha256(str){
+  const enc = new TextEncoder().encode(str);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+function logout(){
+  localStorage.removeItem("nxr_auth");
+  localStorage.removeItem("nxr_email");
+  alert("Sesión cerrada.");
+}
+function relock(){
+  logout();
+  location.reload();
+}
+function toggleNote(){
+  // Intenta enviar un mensaje a index para alternar el bloque (si está abierto)
+  if(window.opener){
+    window.opener.postMessage({type:"toggleNote"}, "*");
+  }
+  // Además, intenta alternar si estamos en index (carga fetch y ejecuta simple DOM code)
+  try{
+    const el = document.getElementById("collab-note");
+    if(el){ el.style.display = (el.style.display === "none") ? "block" : "none"; }
+    alert("Nota alternada (si la portada está abierta).");
+  }catch(e){}
+}
+async function hashCode(){
+  const code = document.getElementById("code").value;
+  const out = document.getElementById("hashout");
+  out.textContent = code ? (await sha256(code)) : "";
+}
+async function copyHash(){
+  const out = document.getElementById("hashout").textContent.trim();
+  if(!out){ alert("No hay hash para copiar."); return; }
+  await navigator.clipboard.writeText(out);
+  alert("Hash copiado al portapapeles.");
+}
+window.addEventListener("DOMContentLoaded", ()=>{
+  const conf = window.NXR_CONFIG || {};
+  const s = JSON.stringify(conf, null, 2);
+  document.getElementById("confout").textContent = s;
+});
+</script>
+</body>
+</html>
