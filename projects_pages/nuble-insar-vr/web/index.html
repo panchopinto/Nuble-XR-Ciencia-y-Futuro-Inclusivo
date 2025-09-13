@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>InSAR — Deformación sísmica VR</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script defer src="js/app.js"></script>
+</head>
+<body>
+  <a-scene renderer="antialias: true" background="color:#06121c">
+    <a-assets>
+      <img id="tex-phase" src="assets/phase.png">
+      <img id="tex-coh" src="assets/coherence.png">
+      <img id="tex-disp" src="assets/displacement_cm.png">
+      <img id="legend-phase" src="assets/legend_phase.png">
+      <img id="legend-disp" src="assets/legend_disp.png">
+    </a-assets>
+
+    <a-entity light="type: ambient; intensity: 0.9"></a-entity>
+    <a-entity light="type: directional; intensity: 0.8" position="0 2 1"></a-entity>
+
+    <!-- Terreno -->
+    <a-entity id="terrain" position="-0.5 0 -1.5" rotation="-90 0 0">
+      <a-obj-model id="mesh" src="assets/terrain.obj" mtl="assets/terrain.mtl"></a-obj-model>
+    </a-entity>
+
+    <!-- Cámara -->
+    <a-entity camera look-controls wasd-controls position="0 1.6 0"></a-entity>
+
+    <!-- UI -->
+    <a-entity position="-0.75 1.35 -1" text="value: InSAR — Fase/Coherencia/Desplazamiento; width: 1.8; color:#fff"></a-entity>
+    <a-entity id="btn-phase" class="ui-btn" geometry="primitive: plane; width: 0.42; height: 0.1"
+              material="color:#9b59b6" position="-0.75 1.2 -1" text="value:Fase envuelta; align:center; width:2"></a-entity>
+    <a-entity id="btn-coh" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#2980b9" position="-0.28 1.2 -1" text="value:Coherencia; align:center; width:2"></a-entity>
+    <a-entity id="btn-disp" class="ui-btn" geometry="primitive: plane; width: 0.42; height: 0.1"
+              material="color:#c0392b" position="0.12 1.2 -1" text="value:Desplazamiento (cm); align:center; width:2"></a-entity>
+
+    <!-- Leyendas -->
+    <a-entity id="legendP" position="0.60 1.28 -1" geometry="primitive: plane; width: 0.45; height: 0.12"
+              material="src:#legend-phase; transparent:true; opacity:0.9"></a-entity>
+    <a-entity id="legendD" position="0.60 1.12 -1" geometry="primitive: plane; width: 0.45; height: 0.12"
+              material="src:#legend-disp; transparent:true; opacity:0.9" visible="false"></a-entity>
+  </a-scene>
+</body>
+</html>

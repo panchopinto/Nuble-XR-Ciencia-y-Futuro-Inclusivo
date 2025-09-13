@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Costas y humedales — VR</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script defer src="js/app.js"></script>
+</head>
+<body>
+  <a-scene renderer="antialias: true" background="color:#06121c">
+    <a-assets>
+      <img id="tex-t1" src="assets/t1.png">
+      <img id="tex-t2" src="assets/t2.png">
+      <img id="mask-water-t1" src="assets/water_t1.png">
+      <img id="mask-water-t2" src="assets/water_t2.png">
+      <img id="mask-wetlands" src="assets/wetlands_mask.png">
+    </a-assets>
+
+    <a-entity light="type: ambient; intensity: 0.9"></a-entity>
+    <a-entity light="type: directional; intensity: 0.8" position="0 2 1"></a-entity>
+
+    <!-- Terreno -->
+    <a-entity id="terrain" position="-0.5 0 -1.5" rotation="-90 0 0">
+      <a-obj-model id="mesh" src="assets/terrain.obj" mtl="assets/terrain.mtl"></a-obj-model>
+    </a-entity>
+
+    <!-- Overlays -->
+    <a-entity id="ov-water-t1" position="-0.5 0.002 -1.5" rotation="-90 0 0" visible="false">
+      <a-plane width="1" height="1" material="src:#mask-water-t1; transparent:true; opacity:0.5; color:#00aaff"></a-plane>
+    </a-entity>
+    <a-entity id="ov-water-t2" position="-0.5 0.003 -1.5" rotation="-90 0 0" visible="false">
+      <a-plane width="1" height="1" material="src:#mask-water-t2; transparent:true; opacity:0.5; color:#0077aa"></a-plane>
+    </a-entity>
+    <a-entity id="ov-wetlands" position="-0.5 0.004 -1.5" rotation="-90 0 0" visible="false">
+      <a-plane width="1" height="1" material="src:#mask-wetlands; transparent:true; opacity:0.5; color:#44ff44"></a-plane>
+    </a-entity>
+
+    <!-- Cámara -->
+    <a-entity camera look-controls wasd-controls position="0 1.6 0"></a-entity>
+
+    <!-- UI -->
+    <a-entity position="-0.75 1.35 -1" text="value: Erosión de costa y humedales; width: 1.8; color:#fff"></a-entity>
+    <a-entity id="btn-t1" class="ui-btn" geometry="primitive: plane; width: 0.28; height: 0.1"
+              material="color:#1e90ff" position="-0.75 1.2 -1" text="value:T1; align:center; width:1.4"></a-entity>
+    <a-entity id="btn-t2" class="ui-btn" geometry="primitive: plane; width: 0.28; height: 0.1"
+              material="color:#28a745" position="-0.44 1.2 -1" text="value:T2; align:center; width:1.4"></a-entity>
+    <a-entity id="btn-w1" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#00aaff" position="-0.10 1.2 -1" text="value:Agua T1 ON/OFF; align:center; width:1.4"></a-entity>
+    <a-entity id="btn-w2" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#0077aa" position="0.30 1.2 -1" text="value:Agua T2 ON/OFF; align:center; width:1.4"></a-entity>
+    <a-entity id="btn-wet" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#44ff44" position="0.70 1.2 -1" text="value:Humedales ON/OFF; align:center; width:1.4"></a-entity>
+  </a-scene>
+</body>
+</html>

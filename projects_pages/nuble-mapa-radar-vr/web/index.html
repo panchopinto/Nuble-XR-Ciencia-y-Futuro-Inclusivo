@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Proyecto 1 — Mapa VR de Ñuble visto por radar (Sentinel‑1 + DEM)</title>
+<link rel="stylesheet" href="css/styles.css"/>
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+</head><body>
+<a-scene renderer="antialias: true" background="color:#06121c">
+  <a-assets>
+    <img id="layer" src="assets/layer.png">
+  </a-assets>
+  <a-entity light="type: ambient; intensity: 0.9"></a-entity>
+  <a-entity light="type: directional; intensity: 0.8" position="0 2 1"></a-entity>
+  <a-entity position="-0.5 0 -1.5" rotation="-90 0 0">
+    <a-plane width="1" height="1" material="src:#layer"></a-plane>
+  </a-entity>
+  <a-entity camera wasd-controls look-controls position="0 1.6 0"></a-entity>
+</a-scene>
+</body></html>

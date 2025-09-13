@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Cambio de uso/deforestación — VR</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script defer src="js/app.js"></script>
+</head>
+<body>
+  <a-scene renderer="antialias: true" background="color:#06121c">
+    <a-assets>
+      <img id="tex-t1" src="assets/t1.png">
+      <img id="tex-t2" src="assets/t2.png">
+      <img id="tex-delta" src="assets/delta.png">
+      <img id="mask-gain" src="assets/mask_gain.png">
+      <img id="mask-loss" src="assets/mask_loss.png">
+    </a-assets>
+
+    <a-entity light="type: ambient; intensity: 0.9"></a-entity>
+    <a-entity light="type: directional; intensity: 0.8" position="0 2 1"></a-entity>
+
+    <!-- Terreno -->
+    <a-entity id="terrain" position="-0.5 0 -1.5" rotation="-90 0 0">
+      <a-obj-model id="mesh" src="assets/terrain.obj" mtl="assets/terrain.mtl"></a-obj-model>
+    </a-entity>
+
+    <!-- Overlays de cambio (planos semitransparentes) -->
+    <a-entity id="overlay-gain" position="-0.5 0.002 -1.5" rotation="-90 0 0" visible="false">
+      <a-plane width="1" height="1" material="src:#mask-gain; transparent:true; opacity:0.6; color:#00ff00"></a-plane>
+    </a-entity>
+    <a-entity id="overlay-loss" position="-0.5 0.003 -1.5" rotation="-90 0 0" visible="false">
+      <a-plane width="1" height="1" material="src:#mask-loss; transparent:true; opacity:0.6; color:#ff3333"></a-plane>
+    </a-entity>
+
+    <!-- Cámara -->
+    <a-entity camera look-controls wasd-controls position="0 1.6 0"></a-entity>
+
+    <!-- UI -->
+    <a-entity position="-0.75 1.35 -1" text="value: Cambio de uso/deforestación (T1/T2/ΔdB + Ganancia/Pérdida); width: 1.8; color:#fff"></a-entity>
+
+    <!-- Botones base -->
+    <a-entity id="btn-t1" class="ui-btn" geometry="primitive: plane; width: 0.3; height: 0.1"
+              material="color:#1e90ff" position="-0.75 1.2 -1" text="value:T1; align:center; width:1.4"></a-entity>
+    <a-entity id="btn-t2" class="ui-btn" geometry="primitive: plane; width: 0.3; height: 0.1"
+              material="color:#28a745" position="-0.42 1.2 -1" text="value:T2; align:center; width:1.4"></a-entity>
+    <a-entity id="btn-delta" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#ff9800" position="-0.06 1.2 -1" text="value:ΔdB; align:center; width:1.4"></a-entity>
+
+    <!-- Botones overlays -->
+    <a-entity id="btn-gain" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#00c853" position="0.33 1.2 -1" text="value:Ganancia ON/OFF; align:center; width:1.4"></a-entity>
+    <a-entity id="btn-loss" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#e53935" position="0.72 1.2 -1" text="value:Pérdida ON/OFF; align:center; width:1.4"></a-entity>
+  </a-scene>
+</body>
+</html>

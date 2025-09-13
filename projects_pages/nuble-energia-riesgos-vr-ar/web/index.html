@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Energía y riesgos — VR</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script defer src="js/vr.js"></script>
+</head>
+<body>
+  <a-scene renderer="antialias: true" background="color:#06121c">
+    <a-assets>
+      <img id="tex-slope" src="assets/slope.png">
+      <img id="tex-rough" src="assets/roughness.png">
+      <img id="tex-hazard" src="assets/hazard_landslide.png">
+      <img id="tex-flow" src="assets/flow_accum.png">
+      <img id="tex-streams" src="assets/streams.png">
+      <img id="tex-hydro" src="assets/hydro_potential.png">
+    </a-assets>
+
+    <a-entity light="type: ambient; intensity: 0.9"></a-entity>
+    <a-entity light="type: directional; intensity: 0.8" position="0 2 1"></a-entity>
+
+    <a-entity id="terrain" position="-0.8 0 -1.5" rotation="-90 0 0">
+      <a-obj-model id="mesh" src="assets/terrain.obj" mtl="assets/terrain.mtl"></a-obj-model>
+    </a-entity>
+
+    <!-- Overlays -->
+    <a-entity id="ov-streams" position="-0.8 0.002 -1.5" rotation="-90 0 0" visible="false">
+      <a-plane width="1.6" height="1.0" material="src:#tex-streams; transparent:true; opacity:0.7; color:#00aaff"></a-plane>
+    </a-entity>
+    <a-entity id="ov-hydro" position="-0.8 0.003 -1.5" rotation="-90 0 0" visible="false">
+      <a-plane width="1.6" height="1.0" material="src:#tex-hydro; transparent:true; opacity:0.8; color:#00ff66"></a-plane>
+    </a-entity>
+
+    <a-entity camera wasd-controls look-controls position="0 1.6 0"></a-entity>
+
+    <!-- UI -->
+    <a-entity position="-0.75 1.35 -1" text="value: Energía y Riesgos — Ñuble; width: 1.8; color:#fff"></a-entity>
+    <a-entity id="btn-slope" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#1e90ff" position="-0.75 1.2 -1" text="value:Pendiente; align:center; width:1.6"></a-entity>
+    <a-entity id="btn-rough" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#9b59b6" position="-0.37 1.2 -1" text="value:Rugosidad; align:center; width:1.6"></a-entity>
+    <a-entity id="btn-hazard" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#e74c3c" position="0.01 1.2 -1" text="value:Riesgo laderas; align:center; width:1.6"></a-entity>
+    <a-entity id="btn-flow" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#ff9800" position="0.39 1.2 -1" text="value:Acumulación; align:center; width:1.6"></a-entity>
+    <a-entity id="btn-streams" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#00aaff" position="0.77 1.2 -1" text="value:Ríos ON/OFF; align:center; width:1.6"></a-entity>
+    <a-entity id="btn-hydro" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#00ff66" position="1.15 1.2 -1" text="value:Potencial ON/OFF; align:center; width:1.8"></a-entity>
+  </a-scene>
+</body>
+</html>

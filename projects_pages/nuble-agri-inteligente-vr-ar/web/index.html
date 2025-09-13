@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Agricultura inteligente — VR</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script defer src="js/vr.js"></script>
+</head>
+<body>
+  <a-scene renderer="antialias: true" background="color:#06121c">
+    <a-assets>
+      <img id="tex-m1" src="assets/moisture_t1.png">
+      <img id="tex-m2" src="assets/moisture_t2.png">
+      <img id="tex-an" src="assets/anomaly.png">
+      <img id="legend-an" src="assets/legend_anom.png">
+    </a-assets>
+
+    <a-entity light="type: ambient; intensity: 0.9"></a-entity>
+    <a-entity light="type: directional; intensity: 0.8" position="0 2 1"></a-entity>
+
+    <a-entity id="terrain" position="-0.7 0 -1.5" rotation="-90 0 0">
+      <a-obj-model id="mesh" src="assets/terrain.obj" mtl="assets/terrain.mtl"></a-obj-model>
+    </a-entity>
+
+    <a-entity camera wasd-controls look-controls position="0 1.6 0"></a-entity>
+
+    <!-- UI -->
+    <a-entity position="-0.75 1.35 -1" text="value: Agricultura inteligente — Humedad y riego; width: 1.8; color:#fff"></a-entity>
+    <a-entity id="btn-m1" class="ui-btn" geometry="primitive: plane; width: 0.32; height: 0.1"
+              material="color:#1e90ff" position="-0.75 1.2 -1" text="value:Humedad T1; align:center; width:1.6"></a-entity>
+    <a-entity id="btn-m2" class="ui-btn" geometry="primitive: plane; width: 0.32; height: 0.1"
+              material="color:#28a745" position="-0.41 1.2 -1" text="value:Humedad T2; align:center; width:1.6"></a-entity>
+    <a-entity id="btn-an" class="ui-btn" geometry="primitive: plane; width: 0.38; height: 0.1"
+              material="color:#ff9800" position="-0.05 1.2 -1" text="value:Anomalía; align:center; width:1.6"></a-entity>
+
+    <!-- Leyenda -->
+    <a-entity id="legend" position="0.55 1.18 -1" geometry="primitive: plane; width: 0.45; height: 0.12"
+              material="src:#legend-an; transparent:true; opacity:0.9" visible="false"></a-entity>
+  </a-scene>
+</body>
+</html>

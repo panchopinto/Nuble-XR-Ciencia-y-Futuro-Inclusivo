@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Glaciares andinos e hídrica — VR</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script defer src="js/vr.js"></script>
+</head>
+<body>
+  <a-scene renderer="antialias: true" background="color:#06121c">
+    <a-assets>
+      <img id="tex-t1" src="assets/t1.png">
+      <img id="tex-t2" src="assets/t2.png">
+      <img id="ice-t1" src="assets/ice_t1.png">
+      <img id="ice-t2" src="assets/ice_t2.png">
+      <img id="ice-ch" src="assets/ice_change.png">
+      <img id="legend-ch" src="assets/legend_change.png">
+    </a-assets>
+
+    <a-entity light="type: ambient; intensity: 0.9"></a-entity>
+    <a-entity light="type: directional; intensity: 0.8" position="0 2 1"></a-entity>
+
+    <a-entity id="terrain" position="-0.5 0 -1.5" rotation="-90 0 0">
+      <a-obj-model id="mesh" src="assets/terrain.obj" mtl="assets/terrain.mtl"></a-obj-model>
+    </a-entity>
+
+    <!-- Overlays: ice masks and change -->
+    <a-entity id="ov-ice-t1" position="-0.5 0.002 -1.5" rotation="-90 0 0" visible="false">
+      <a-plane width="1" height="1" material="src:#ice-t1; transparent:true; opacity:0.55; color:#66ccff"></a-plane>
+    </a-entity>
+    <a-entity id="ov-ice-t2" position="-0.5 0.003 -1.5" rotation="-90 0 0" visible="false">
+      <a-plane width="1" height="1" material="src:#ice-t2; transparent:true; opacity:0.55; color:#33aaff"></a-plane>
+    </a-entity>
+    <a-entity id="ov-ice-ch" position="-0.5 0.004 -1.5" rotation="-90 0 0" visible="false">
+      <a-plane width="1" height="1" material="src:#ice-ch; transparent:true; opacity:0.7"></a-plane>
+    </a-entity>
+
+    <a-entity camera wasd-controls look-controls position="0 1.6 0"></a-entity>
+
+    <!-- UI -->
+    <a-entity position="-0.75 1.35 -1" text="value: Glaciares andinos e hídrica; width: 1.8; color:#fff"></a-entity>
+
+    <a-entity id="btn-t1" class="ui-btn" geometry="primitive: plane; width: 0.28; height: 0.1"
+              material="color:#1e90ff" position="-0.75 1.2 -1" text="value:T1; align:center; width:1.4"></a-entity>
+    <a-entity id="btn-t2" class="ui-btn" geometry="primitive: plane; width: 0.28; height: 0.1"
+              material="color:#28a745" position="-0.44 1.2 -1" text="value:T2; align:center; width:1.4"></a-entity>
+    <a-entity id="btn-ice1" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#66ccff" position="-0.10 1.2 -1" text="value:Hielo/Nieve T1; align:center; width:1.6"></a-entity>
+    <a-entity id="btn-ice2" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#33aaff" position="0.30 1.2 -1" text="value:Hielo/Nieve T2; align:center; width:1.6"></a-entity>
+    <a-entity id="btn-ich" class="ui-btn" geometry="primitive: plane; width: 0.35; height: 0.1"
+              material="color:#ff4757" position="0.70 1.2 -1" text="value:Cambio ON/OFF; align:center; width:1.6"></a-entity>
+
+    <!-- Leyenda cambio -->
+    <a-entity id="legend" position="0.60 1.15 -1" geometry="primitive: plane; width: 0.45; height: 0.12"
+              material="src:#legend-ch; transparent:true; opacity:0.9" visible="false"></a-entity>
+  </a-scene>
+</body>
+</html>
