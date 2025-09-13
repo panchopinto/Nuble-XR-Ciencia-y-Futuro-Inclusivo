@@ -1,3 +1,45 @@
-<!DOCTYPE html><html><head><meta charset='utf-8'><title>Acciones</title></head><body>
-<h1 style='font-family:system-ui; padding:12px 16px'>Panel de acciones (admin)</h1>
-<script src='auth.js'></script><div class='wrap'>Cargando…</div></body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Acciones</title>
+  <script src="auth.js"></script>
+  <style>
+    body{margin:0;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;background:#0a1020;color:#eaf2ff}
+    .wrap{max-width:900px;margin:0 auto;padding:20px}
+    h1{margin:10px 0 14px}
+    .panel{background:#101a34;border:1px solid #223054;border-radius:12px;padding:14px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+    .muted{color:#a9b4d0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Panel de acciones (admin)</h1>
+    <div class="panel">
+      <div>Estado: <span id="authEmail" class="muted">Cargando…</span></div>
+      <div class="row">
+        <button id="btnProtectOn">Activar modo protegido</button>
+        <button id="btnProtectOff">Desactivar modo protegido</button>
+        <button id="btnLogout">Cerrar sesión</button>
+      </div>
+      <p class="muted" style="margin-top:8px">El modo protegido bloquea click derecho, F12, Ctrl+U/C/S y difumina la UI.</p>
+    </div>
+  </div>
+  <script>
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const email = (localStorage.getItem('nxr_email')||'').toLowerCase();
+    const authed = localStorage.getItem('nxr_auth')==='1';
+    const allowed = (window.NXR_CONFIG && Array.isArray(NXR_CONFIG.allowedEmails)) ? NXR_CONFIG.allowedEmails.map(e=>e.toLowerCase()) : [];
+    const ok = authed && email && allowed.includes(email);
+    const label = document.getElementById('authEmail');
+    label.textContent = ok ? (email + ' (autorizado)') : (authed ? (email || 'sin correo') + ' (no autorizado)' : 'No autenticado');
+    document.getElementById('btnProtectOn').onclick = ()=>{ localStorage.setItem('nxr_protect','1'); alert('Modo protegido ACTIVADO'); };
+    document.getElementById('btnProtectOff').onclick = ()=>{ localStorage.removeItem('nxr_protect'); alert('Modo protegido DESACTIVADO'); };
+    document.getElementById('btnLogout').onclick = ()=>{ localStorage.removeItem('nxr_auth'); localStorage.removeItem('nxr_email'); location.href='index.html'; };
+  });
+  </script>
+</body>
+</html>

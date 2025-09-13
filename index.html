@@ -45,6 +45,9 @@
   #gate input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #2a3a60;background:#0b1328;color:#eaf2ff}
   #gate .row{display:flex;gap:10px;align-items:center;margin-top:14px;justify-content:space-between}
   #gate button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;border:none;border-radius:10px;padding:10px 14px;cursor:pointer;box-shadow:0 6px 16px #000a}
+
+  .corner-badge{position:absolute;left:8px;top:8px;background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;
+    font-weight:800;font-size:12px;border-radius:999px;padding:4px 8px;box-shadow:0 6px 16px #0009}
 </style>
 </head>
 <body>
@@ -56,10 +59,9 @@
       <div id="collab-note">Proyecto colaborativo con <strong>Belén Acuña</strong> (PIE, Sala SEM Tecnológica: 2 estaciones HTC VR, pantalla táctil gigante y 15 Oculus Quest 2).</div>
       <div class="ribbon"></div>
       <div class="cta-row">
-        <div id="admin-link" style="display:none"><a class="cta" href="acciones.html"><span class="icon"></span> ⚙️ Acciones (admin)</a></div>
-        
+        <a class="cta" href="acciones.html"><span class="icon"></span> Panel de acciones</a>
         <a class="cta" href="#proyectos"><span class="icon"></span> Ver proyectos</a>
-        
+        <div id="admin-link" style="display:none"><a class="cta" href="acciones.html"><span class="icon"></span> ⚙️ Acciones (admin)</a></div>
       </div>
     </div>
   </header>
@@ -84,15 +86,27 @@
   </div>
 
 <script>
-const cards = [['nuble-mapa-radar-vr', '1. Mapa VR Ñuble (Radar)', 'https://source.unsplash.com/featured/?satellite,radar,earth', 'Unsplash (tema: radar/satélite)', 'https://unsplash.com', 'PIE: contrastes radar ↔ visión; PAES: lectura de capas.'], ['nuble-inundaciones-vr', '2. Inundaciones y crecidas', 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Pakistan_floods_2010.jpg', 'NASA Earth Observatory (Pakistan floods 2010)', 'https://commons.wikimedia.org/wiki/File:Pakistan_floods_2010.jpg', 'PIE: iconos grandes; PAES: interpretación de inundación.'], ['nuble-incendios-vr', '3. Incendios y recuperación', 'https://source.unsplash.com/featured/?wildfire,forest,aerial', 'Unsplash (tema: incendios)', 'https://unsplash.com', 'PIE: paleta accesible; PAES: severidad y recuperación.'], ['nuble-cambio-uso-vr', '4. Cambio de uso de suelo', 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Growth_of_Las_Vegas_1984-2009.jpg', 'NASA Earth Observatory (Las Vegas growth)', 'https://commons.wikimedia.org/wiki/File:Growth_of_Las_Vegas_1984-2009.jpg', 'PIE: cambio ON/OFF; PAES: análisis temporal ΔdB.'], ['nuble-costas-humedales-vr', '5. Costas y humedales', 'https://source.unsplash.com/featured/?coastal,marsh,aerial', 'Unsplash (tema: costas/humedales)', 'https://unsplash.com', 'PIE: texto claro; PAES: dinámica de playa y humedales.'], ['nuble-insar-vr', '6. InSAR deformación sísmica', 'https://upload.wikimedia.org/wikipedia/commons/4/45/NASA_Hectormine_Earthquake_Interferogram.jpg', 'NASA/ESA (Hector Mine interferogram)', 'https://commons.wikimedia.org/wiki/File:NASA_Hectormine_Earthquake_Interferogram.jpg', 'PIE: leyendas simples; PAES: franjas y desplazamientos.'], ['nuble-maritimo-vr-ar', '7. Tráfico marítimo / Acuicultura', 'https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2016/01/satellite-ais-based_map_of_global_ship_traffic/15830712-1-eng-GB/Satellite-AIS-based_map_of_global_ship_traffic.jpg', 'ESA (AIS tráfico marítimo)', 'https://www.esa.int/ESA_Multimedia/Images/2016/01/Satellite-AIS-based_map_of_global_ship_traffic', 'PIE: AR colaborativa; PAES: detección (CFAR).'], ['andes-glaciares-vr-ar', '8. Glaciares e hídrica', 'https://upload.wikimedia.org/wikipedia/commons/2/2b/Columbia_Glacier_Alaska_-_2000-2015.jpg', 'NASA (Columbia Glacier retreat)', 'https://commons.wikimedia.org/wiki/File:Columbia_Glacier_Alaska_-_2000-2015.jpg', 'PIE: leyenda de cambio; PAES: hipsometría ↔ agua.'], ['nuble-energia-riesgos-vr-ar', '9. Energía y riesgos', 'https://source.unsplash.com/featured/?solar,farm,aerial', 'Unsplash (tema: energía)', 'https://unsplash.com', 'PIE: categorías nítidas; PAES: riesgo/energía.'], ['nuble-agri-inteligente-vr-ar', '10. Agricultura inteligente', 'https://source.unsplash.com/featured/?farmland,fields,aerial', 'Unsplash (tema: agricultura)', 'https://unsplash.com', 'PIE: anomalía; PAES: priorización de riego.']];
+
+const cards = [
+  ["nuble-mapa-radar-vr","1. Mapa VR Ñuble (Radar)","PIE: contrastes radar ↔ visión; PAES: lectura de capas."],
+  ["nuble-inundaciones-vr","2. Inundaciones y crecidas","PIE: iconos grandes; PAES: interpretación de inundación."],
+  ["nuble-incendios-vr","3. Incendios y recuperación","PIE: paleta accesible; PAES: severidad y recuperación."],
+  ["nuble-cambio-uso-vr","4. Cambio de uso de suelo","PIE: cambio ON/OFF; PAES: análisis temporal ΔdB."],
+  ["nuble-costas-humedales-vr","5. Costas y humedales","PIE: texto claro; PAES: dinámica de playa y humedales."],
+  ["nuble-insar-vr","6. InSAR deformación sísmica","PIE: leyendas simples; PAES: franjas y desplazamientos."],
+  ["nuble-maritimo-vr-ar","7. Tráfico marítimo / Acuicultura","PIE: AR colaborativa; PAES: detección (CFAR)."],
+  ["andes-glaciares-vr-ar","8. Glaciares e hídrica","PIE: leyenda de cambio; PAES: hipsometría ↔ agua."],
+  ["nuble-energia-riesgos-vr-ar","9. Energía y riesgos","PIE: categorías nítidas; PAES: riesgo/energía."],
+  ["nuble-agri-inteligente-vr-ar","10. Agricultura inteligente","PIE: anomalía; PAES: priorización de riego."]
+];
 const grid = document.querySelector('#proyectos');
-grid.innerHTML = cards.map(([slug,title,img,creditText,creditUrl,note]) => `
+grid.innerHTML = cards.map(([slug,title,note]) => `
   <article class="card">
-    <img class="thumb" src="${img}" alt="${title}" onerror="this.onerror=null; this.src='https://source.unsplash.com/featured/?'+encodeURIComponent(title);" />
+    <div class="corner-badge">XR</div>
+    <img class="thumb" src="thumbs/icons/${slug}.svg" alt="${title}"/>
     <div class="card-body">
       <h3>${title}</h3>
       <p>${note}</p>
-      <div style="margin-top:6px;font-size:12px;color:#9db0d6">Crédito: <a href="${creditUrl}" target="_blank" rel="noopener">${creditText}</a></div>
       <div class="actions">
         <a class="btn" data-proj-folder="${slug}" href="#"><span class="icon"></span> Ir al proyecto</a>
         <a class="btn" href="#" onclick="alert('Abre el proyecto y presiona 🧩 Actividad o 🧠 Trivia.');return false;">❓ Ayuda</a>
@@ -119,13 +133,16 @@ document.addEventListener('keydown', function(e){
 <script>
 document.addEventListener("DOMContentLoaded", ()=>{
   try{
-    if(localStorage.getItem("nxr_auth")==="1"){
-      var link = document.getElementById("admin-link");
-      if(link){ link.style.display = "block"; }
-    }
+    const authed = localStorage.getItem("nxr_auth")==="1";
+    const email = (localStorage.getItem("nxr_email")||"").toLowerCase();
+    const allowed = (window.NXR_CONFIG && Array.isArray(NXR_CONFIG.allowedEmails)) ? NXR_CONFIG.allowedEmails.map(e=>e.toLowerCase()) : [];
+    const ok = authed && email && allowed.includes(email);
+    const link = document.getElementById("admin-link");
+    const label = document.getElementById("admin-email");
+    if(link){ link.style.display = ok ? "block" : "none"; }
+    if(label){ label.style.display = ok ? "block" : "none"; if(ok){ label.textContent = "Sesión: " + email; } }
   }catch(e){}
 });
 </script>
-
 </body>
 </html>
