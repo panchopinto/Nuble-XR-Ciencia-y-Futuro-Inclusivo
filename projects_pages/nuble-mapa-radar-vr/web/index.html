@@ -23,6 +23,19 @@
     .helpCard button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;border:none;border-radius:10px;padding:8px 12px;cursor:pointer}
   </style>
 
+
+  <style>
+    /* learn-ui */
+    .hud .btn{display:inline-block;background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;
+      padding:6px 10px;border-radius:10px;text-decoration:none;margin-left:6px}
+    .modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:9999}
+    .card{background:#101a34;border:1px solid #223054;border-radius:14px;max-width:620px;width:92%;color:#cfe0ff;padding:16px}
+    .card h3{margin:0 0 8px 0}
+    .card ol{margin:8px 0 0 18px}
+    .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+    .card button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;border:none;border-radius:10px;padding:8px 12px;cursor:pointer}
+  </style>
+
 </head>
 <body>
   <div class="hud">
@@ -43,7 +56,13 @@
     <li>Uso educativo: escenas interactivas VR/AR y datos satelitales.</li>
     <li>Créditos: Colaboración con Belén Acuña (PIE, Sala SEM).</li>
   </ul>
-  <div class="row"><button onclick="hideInfo()">Cerrar</button></div></div></div>
+  <div class="row"><button onclick="hideInfo()">Cerrar</button></div></div>
+    <a class="btn" href="#" onclick="NXRCells.load('cells/cells.json');return false;">🧩 Actividad</a>
+    <a class="btn" href="#" onclick="NXRQuiz.load('quiz/questions.json');return false;">🧠 Trivia</a>
+  </div>
+
+  <div class="modal" id="cellsModal"><div class="card"><h3>Células</h3><div id="cellsBox">Cargando…</div><div class="row"><button onclick="NXRCells.hide()">Cerrar</button></div></div></div>
+  <div class="modal" id="quizModal"><div class="card"><h3>Trivia</h3><div id="quizBox">Cargando…</div><div class="row"><button onclick="NXRQuiz.hide()">Cerrar</button></div></div></div>
 
   <a-scene renderer="colorManagement: true; antialias: true" background="color: #1a1a1a">
     <!-- Luces -->
@@ -75,5 +94,7 @@
     function showInfo(){ document.getElementById('infoModal').style.display='flex'; }
     function hideInfo(){ document.getElementById('infoModal').style.display='none'; }
   </script>
+<script src="quiz/quiz.js"></script>
+<script src="cells/cells.js"></script>
 </body>
 </html>
