@@ -48,23 +48,68 @@
 
   .corner-badge{position:absolute;left:8px;top:8px;background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;
     font-weight:800;font-size:12px;border-radius:999px;padding:4px 8px;box-shadow:0 6px 16px #0009}
+
+  /* brand-header */
+  .appbar{position:sticky;top:0;z-index:20;background:linear-gradient(180deg, #0a1020ee, #0a1020cc, transparent);
+          backdrop-filter: blur(8px); border-bottom:1px solid #1e2a44}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:42px;height:42px;border-radius:12px;background:conic-gradient(from 45deg,#6EE7F9,#A78BFA,#F472B6,#FDE68A,#6EE7F9);
+        box-shadow:0 6px 20px #0007;position:relative}
+  .logo::after{content:"XR";position:absolute;inset:0;display:grid;place-items:center;
+               color:#0a1020;font-weight:900;font-size:14px;mix-blend-mode:screen}
+  .hero{position:relative;overflow:hidden;padding:28px 20px 12px}
+  .mesh{position:absolute;inset:-20%;background:radial-gradient(1200px 600px at 20% -10%, rgba(26,42,108,.22), transparent),
+                           radial-gradient(900px 500px at 110% 10%, rgba(167,139,250,.18), transparent),
+                           radial-gradient(800px 500px at -10% 120%, rgba(110,231,249,.14), transparent);
+        filter:saturate(1.05);animation:float 18s ease-in-out infinite alternate;pointer-events:none}
+  @keyframes float{from{transform:translateY(-6px)}to{transform:translateY(6px)}}
+  .wave{position:absolute;left:0;right:0;bottom:-1px;height:24px}
+  .wave svg{display:block;width:100%;height:100%}
+  .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .cta{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,#6EE7F9,#A78BFA);
+       color:#0a1020;font-weight:800;border:0}
+  .subtitle{margin:0;color:#a9b4d0}
+  .title{display:flex;align-items:baseline;gap:10px}
+  .title .sup{font-size:12px;font-weight:700;color:#9db0d6;border:1px solid #263454;border-radius:999px;padding:3px 8px}
 </style>
 </head>
 <body>
-  <header>
+  
+  <header class="appbar">
     <div class="wrap hero">
-      <h1 class="title">Ñuble XR — Ciencia y Futuro Inclusivo (PIE & PAES)</h1>
-      <p class="subtitle">Portafolio con 10 proyectos VR/AR/3D + “células” y trivias interactivas.</p>
-      <div class="badges"><span class="badge">10 proyectos</span><span class="badge">WebXR</span><span class="badge">PIE & PAES</span><span class="badge">Listos para clase</span></div>
+      <div class="mesh"></div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+        <div class="brand">
+          <div class="logo"></div>
+          <div>
+            <h1 class="title"><span>Ñuble XR</span> <span class="sup">PIE &amp; PAES</span></h1>
+            <p class="subtitle">Ciencia y Futuro Inclusivo — 10 proyectos VR/AR/3D con “células” y trivias.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <div class="badge">WebXR</div>
+          <div class="badge">10 proyectos</div>
+          <div class="badge">Listos para clase</div>
+        </div>
+      </div>
+
       <div id="collab-note">Proyecto colaborativo con <strong>Belén Acuña</strong> (PIE, Sala SEM Tecnológica: 2 estaciones HTC VR, pantalla táctil gigante y 15 Oculus Quest 2).</div>
-      <div class="ribbon"></div>
+
       <div class="cta-row">
-        <a class="cta" href="acciones.html"><span class="icon"></span> Panel de acciones</a>
         <a class="cta" href="#proyectos"><span class="icon"></span> Ver proyectos</a>
         <div id="admin-link" style="display:none"><a class="cta" href="acciones.html"><span class="icon"></span> ⚙️ Acciones (admin)</a></div>
       </div>
+
+      <div class="wave">
+        <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,40 C180,80 360,20 540,36 C720,52 900,96 1080,72 C1260,48 1440,0 1440,0 L1440,100 L0,100 Z"
+                fill="#0a1020"></path>
+        </svg>
+      </div>
+      <div id="admin-email" style="display:none; margin-top:8px; font-size:12px; color:#9db0d6"></div>
     </div>
   </header>
+    
 
   <main class="wrap">
     <section id="proyectos" class="grid"></section>
