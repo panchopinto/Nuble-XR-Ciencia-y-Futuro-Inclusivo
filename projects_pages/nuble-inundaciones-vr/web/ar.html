@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AR — Inundaciones y crecidas — Ñuble XR</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <style>
+    body{margin:0;background:#000;color:#fff;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}
+    .hud{position:fixed;left:10px;top:10px;background:rgba(0,0,0,.55);padding:10px 12px;border-radius:10px;font-size:13px}
+    .hud a{color:#7fe0ff;text-decoration:none;margin-right:8px}
+    .hint{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.55);padding:8px 12px;border-radius:10px;font-size:13px}
+    .panel{position:fixed;right:10px;top:10px;background:rgba(0,0,0,.55);padding:10px 12px;border-radius:10px;font-size:13px}
+    .panel label{display:block;margin-top:6px}
+  </style>
+</head>
+<body>
+  <div class="hud">
+    <strong>AR — Inundaciones y crecidas</strong><br/>
+    <a href="index.html">VR</a>
+    <a href="../../index.html">← Portada</a>
+  </div>
+  <div class="hint">Mueve el teléfono y toca para colocar el terreno.</div>
+  <div class="panel">
+    <div>Extensión de agua:</div>
+    <label><input type="radio" name="flood" value="pre" checked> Antes</label>
+    <label><input type="radio" name="flood" value="post"> Después (crecida)</label>
+    <label style="margin-top:8px">Opacidad agua: <input id="alpha" type="range" min="0" max="1" step="0.05" value="0.6"></label>
+  </div>
+
+  <a-scene xr-mode-ui="enabled: true"
+           webxr="optionalFeatures: hit-test, dom-overlay; overlayElement: .hud"
+           renderer="colorManagement: true; antialias: true"
+           background="color: #000"
+           vr-mode-ui="enabled: false">
+    <a-entity light="type: ambient; intensity: 0.7"></a-entity>
+    <a-entity light="type: directional; intensity: 1" position="0 1 0"></a-entity>
+
+    <a-entity id="anchor" visible="false"></a-entity>
+    <a-entity camera look-controls="enabled:false"></a-entity>
+  </a-scene>
+
+  <script>
+  const anchor = document.getElementById('anchor');
+  let placed = false;
+  document.querySelector('a-scene').addEventListener('click', () => {
+    if(placed) return;
+    // terreno
+    const t = document.createElement('a-entity');
+    t.setAttribute('obj-model','obj: url(assets/terrain.obj)');
+    t.setAttribute('material','src: url(assets/colormap.png); roughness:0.9; metalness:0.0');
+    t.setAttribute('rotation','-90 0 0');
+    t.setAttribute('scale','0.05 0.05 0.05');
+    anchor.appendChild(t);
+    // overlays
+    const pre = document.createElement('a-plane');
+    pre.setAttribute('id','waterPre');
+    pre.setAttribute('material','src: url(assets/flood_pre.png); transparent:true; opacity:0.6; color:#2ea3ff; blending:additive');
+    pre.setAttribute('rotation','-90 0 0');
+    pre.setAttribute('width','192'); pre.setAttribute('height','192');
+    anchor.appendChild(pre);
+
+    const post = document.createElement('a-plane');
+    post.setAttribute('id','waterPost');
+    post.setAttribute('material','src: url(assets/flood_post.png); transparent:true; opacity:0.0; color:#2ea3ff; blending:additive');
+    post.setAttribute('rotation','-90 0 0');
+    post.setAttribute('width','192'); post.setAttribute('height','192');
+    anchor.appendChild(post);
+
+    anchor.setAttribute('visible','true');
+    placed = true;
+    document.querySelector('.hint').textContent = 'Terreno colocado. Usa los controles para ver Antes/Después.';
+  });
+
+  function updateOpacity(){
+    const value = document.getElementById('alpha').value;
+    const onPre = document.querySelector('input[name="flood"][value="pre"]').checked;
+    const pre = document.getElementById('waterPre');
+    const post = document.getElementById('waterPost');
+    if(pre&&post){
+      pre.setAttribute('material','src: assets/flood_pre.png; transparent:true; opacity:'+(onPre?value:0)+'; color:#2ea3ff; blending:additive');
+      post.setAttribute('material','src: assets/flood_post.png; transparent:true; opacity:'+(onPre?0:value)+'; color:#2ea3ff; blending:additive');
+    }
+  }
+  document.querySelectorAll('input[name="flood"]').forEach(r => r.addEventListener('change', updateOpacity));
+  document.getElementById('alpha').addEventListener('input', updateOpacity);
+  </script>
+</body>
+</html>

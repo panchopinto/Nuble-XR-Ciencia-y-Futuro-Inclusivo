@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Proyecto 2 — Inundaciones y crecidas — Ñuble XR</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <style>
+    body{margin:0;background:#000;color:#fff;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}
+    .hud{position:fixed;left:10px;top:10px;background:rgba(0,0,0,.55);padding:10px 12px;border-radius:10px;font-size:13px}
+    .hud a{color:#7fe0ff;text-decoration:none;margin-right:8px}
+    .panel{position:fixed;right:10px;top:10px;background:rgba(0,0,0,.55);padding:10px 12px;border-radius:10px;font-size:13px}
+    .panel label{display:block;margin-top:6px}
+  </style>
+</head>
+<body>
+  <div class="hud">
+    <strong>Proyecto 2 — Inundaciones y crecidas</strong><br/>
+    <a href="../../index.html">← Portada</a>
+    <a href="ar.html">AR</a>
+  </div>
+  <div class="panel">
+    <div>Extensión de agua:</div>
+    <label><input type="radio" name="flood" value="pre" checked> Antes</label>
+    <label><input type="radio" name="flood" value="post"> Después (crecida)</label>
+    <label style="margin-top:8px">Opacidad agua: <input id="alpha" type="range" min="0" max="1" step="0.05" value="0.6"></label>
+  </div>
+
+  <a-scene renderer="colorManagement: true; antialias: true" background="color: #1a1a1a">
+    <a-entity light="type: ambient; intensity: 0.6"></a-entity>
+    <a-entity light="type: directional; intensity: 0.9" position="1 1 0"></a-entity>
+
+    <!-- Terreno -->
+    <a-entity id="terrain" position="0 0 -30" rotation="-20 0 0"
+      obj-model="obj: url(assets/terrain.obj)"
+      material="src: url(assets/colormap.png); roughness:0.9; metalness:0.0"></a-entity>
+
+    <!-- Overlays de agua: pre/post -->
+    <a-plane id="waterPre" position="0 0 -30" rotation="-20 0 0" width="192" height="192"
+             material="src: url(assets/flood_pre.png); transparent:true; opacity:0.6; color:#2ea3ff; blending:additive"></a-plane>
+    <a-plane id="waterPost" position="0 0 -30" rotation="-20 0 0" width="192" height="192"
+             material="src: url(assets/flood_post.png); transparent:true; opacity:0.0; color:#2ea3ff; blending:additive"></a-plane>
+
+    <a-entity geometry="primitive: circle; radius: 140" rotation="-90 0 0"
+              material="color: #0c0c10; roughness:1; metalness:0"></a-entity>
+    <a-sky color="#0b0f14"></a-sky>
+
+    <a-entity id="rig" position="0 8 30">
+      <a-entity camera look-controls wasd-controls="acceleration:25"></a-entity>
+    </a-entity>
+  </a-scene>
+
+  <script>
+  const pre = document.getElementById('waterPre');
+  const post = document.getElementById('waterPost');
+  document.querySelectorAll('input[name="flood"]').forEach(r => {
+    r.addEventListener('change', e => {
+      const mode = e.target.value;
+      pre.setAttribute('material','src: assets/flood_pre.png; transparent:true; opacity:'+(mode==='pre'?document.getElementById('alpha').value:0)+'; color:#2ea3ff; blending:additive');
+      post.setAttribute('material','src: assets/flood_post.png; transparent:true; opacity:'+(mode==='post'?document.getElementById('alpha').value:0)+'; color:#2ea3ff; blending:additive');
+    });
+  });
+  document.getElementById('alpha').addEventListener('input', e => {
+    const value = e.target.value;
+    const onPre = document.querySelector('input[name="flood"][value="pre"]').checked;
+    pre.setAttribute('material','src: assets/flood_pre.png; transparent:true; opacity:'+(onPre?value:0)+'; color:#2ea3ff; blending:additive');
+    post.setAttribute('material','src: assets/flood_post.png; transparent:true; opacity:'+(onPre?0:value)+'; color:#2ea3ff; blending:additive');
+  });
+  </script>
+</body>
+</html>
