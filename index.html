@@ -5,206 +5,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Ñuble XR — Ciencia y Futuro Inclusivo (PIE & PAES)</title>
 <script src="auth.js" defer></script>
+<meta name="color-scheme" content="dark">
 <style>
-  :root{{--bg:#0a1020;--panel:#0f1730;--ink:#eaf2ff;--muted:#a9b4d0;--glass:rgba(255,255,255,0.06);--glass2:rgba(255,255,255,0.10)}}
-  *{{box-sizing:border-box}} body{{margin:0;background:radial-gradient(1200px 600px at 20% -10%, #1a2a6c22, transparent), var(--bg); color:var(--ink); font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}}
-  header{{position:sticky;top:0;background:linear-gradient(180deg,#0a1020ee,#0a1020aa,transparent);backdrop-filter:blur(6px);border-bottom:1px solid #1e2a44;z-index:10}}
-  .wrap{{max-width:1100px;margin:0 auto;padding:20px}} .hero{{padding:28px 20px 8px}} .title{{font-weight:800;letter-spacing:.2px;font-size:28px;margin:0 0 6px}} .subtitle{{margin:0;color:var(--muted)}}
-  .badges{{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}} .badge{{background:linear-gradient(135deg,#1f2a44,#152038);border:1px solid #263454;border-radius:999px;padding:6px 12px;font-size:12px;color:#cfe0ff}}
-  #collab-note{{margin:15px 0;padding:12px;background:#111a2e;border:1px solid #1e2a44;border-radius:10px;color:#cfe0ff}}
-  .grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;padding:20px}} .card{{background:var(--glass);border:1px solid #223054;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px #00000050;transition:transform .2s, box-shadow .2s;position:relative}} .card:hover{{transform:translateY(-4px);box-shadow:0 14px 40px #00000070}}
-  .thumb{{width:100%;height:150px;object-fit:cover;display:block;filter:saturate(1.1) contrast(1.05)}}
-  .card-body{{padding:14px}} .card h3{{margin:4px 0 8px;font-size:18px}} .card p{{margin:0;color:var(--muted);min-height:36px}}
-  .actions{{display:flex;align-items:center;justify-content:space-between;margin-top:12px}}
-  .btn{{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#8bdcff,#ffffff33);color:#0a1020;font-weight:700;padding:10px 14px;border-radius:12px;border:1px solid #ffffff88;text-decoration:none;box-shadow:inset 0 0 0 1px #00000022, 0 6px 16px #00000055;transition: transform .15s ease}}
-  .btn:hover{{transform:translateY(-1px)}} .tags span{{display:inline-block;background:var(--glass2);border:1px solid #2a3a60;padding:6px 10px;border-radius:999px;font-size:11px;color:#cfe0ff;margin-left:6px}}
-  body.protected main, body.protected header, body.protected footer {{ filter: blur(3px) brightness(0.85); pointer-events:none; user-select:none }}
-  body.protected * {{ -webkit-user-select:none; user-select:none; -webkit-user-drag:none }}
-  body.protected img, body.protected video, body.protected canvas {{ pointer-events:none; -webkit-user-drag:none }}
-  #gate{{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:#0009; z-index:9999 }}
-  #gate .card{{ background:#101a34; border:1px solid #223054; border-radius:14px; max-width:520px; width:96%; padding:18px; color:#cfe0ff }}
-  #gate label{{ display:block; font-size:13px; color:#cfe0ff; margin-top:10px }}
-  #gate input{{ width:100%; padding:10px 12px; border-radius:10px; border:1px solid #2a3a60; background:#0b1328; color:#eaf2ff }}
-  #gate .row{{ display:flex; gap:10px; align-items:center; margin-top:14px; justify-content:space-between }}
-  #gate button{{ background:linear-gradient(135deg,#6EE7F9,#A78BFA); color:#0a1020; font-weight:800; border:none; border-radius:10px; padding:10px 14px; cursor:pointer; box-shadow:0 6px 16px #000a }}
-
-  /* --hero-enhanced */
-  .title{font-size:36px;letter-spacing:.3px}
-  .hero .ribbon{margin-top:14px;height:8px;border-radius:999px;
-    background: linear-gradient(90deg,#6EE7F9, #A78BFA, #F472B6, #FDE68A);
-    background-size: 200% 100%; animation: slide 8s linear infinite;
-    box-shadow: 0 2px 12px rgba(0,0,0,.25); opacity:.95}
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:#0a1020;color:#eaf2ff;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
+       background-image: radial-gradient(1200px 600px at 20% -10%, rgba(26,42,108,.18), transparent);}
+  a{text-decoration:none;color:inherit}
+  img{display:block;max-width:100%}
+  header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg, #0a1020ee, #0a1020bb, transparent);backdrop-filter:blur(6px);border-bottom:1px solid #1e2a44}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px}
+  .hero{padding:28px 20px 8px}
+  .title{font-weight:900;letter-spacing:.2px;font-size:36px;margin:0 0 6px}
+  .subtitle{margin:0;color:#a9b4d0}
+  .badges{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+  .badge{background:linear-gradient(135deg,#1f2a44,#152038);border:1px solid #263454;border-radius:999px;padding:6px 12px;font-size:12px;color:#cfe0ff}
+  .ribbon{margin-top:14px;height:8px;border-radius:999px;background:linear-gradient(90deg,#6EE7F9,#A78BFA,#F472B6,#FDE68A);
+          background-size:200% 100%;animation:slide 8s linear infinite;box-shadow:0 2px 12px rgba(0,0,0,.25);opacity:.95}
   @keyframes slide{0%{background-position:0% 0}100%{background-position:200% 0}}
-  .hero .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-  .cta{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;
-       background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;border:0;text-decoration:none}
-  .cta span.icon{width:18px;height:18px;border-radius:4px;background:conic-gradient(from 45deg,#6EE7F9,#A78BFA,#F472B6,#FDE68A,#6EE7F9)}
-  .btn .icon{width:14px;height:14px;border-radius:4px;display:inline-block;background:conic-gradient(from 45deg,#34d399,#60a5fa,#f472b6,#fcd34d,#34d399)}
-  .actions .btn{gap:10px}
+  .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .cta{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,#6EE7F9,#A78BFA);
+       color:#0a1020;font-weight:800;border:0}
+  .cta .icon,.btn .icon{width:16px;height:16px;border-radius:4px;background:conic-gradient(from 45deg,#6EE7F9,#A78BFA,#F472B6,#FDE68A,#6EE7F9)}
+  #collab-note{margin:15px 0;padding:12px;background:#111a2e;border:1px solid #1e2a44;border-radius:10px;color:#cfe0ff}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;padding:20px}
+  .card{background:rgba(255,255,255,0.06);border:1px solid #223054;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px #0008;transition:transform .2s, box-shadow .2s;position:relative}
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 40px #000a}
+  .thumb{width:100%;height:160px;object-fit:cover;filter:saturate(1.08) contrast(1.05)}
+  .card-body{padding:14px}
+  .card h3{margin:4px 0 8px;font-size:18px}
+  .card p{margin:0;color:#a9b4d0;min-height:36px}
+  .actions{display:flex;align-items:center;justify-content:space-between;margin-top:12px;gap:10px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#8bdcff,#ffffff33);color:#0a1020;font-weight:800;
+       padding:10px 14px;border-radius:12px;border:1px solid #ffffff88;box-shadow:inset 0 0 0 1px #0002, 0 6px 16px #0009}
+  .tags span{display:inline-block;background:rgba(255,255,255,0.12);border:1px solid #2a3a60;padding:6px 10px;border-radius:999px;font-size:11px;color:#cfe0ff;margin-left:6px}
+  #gate{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#0009;z-index:9999}
+  #gate .card{background:#101a34;border:1px solid #223054;border-radius:14px;max-width:520px;width:96%;padding:18px;color:#cfe0ff}
+  #gate label{display:block;font-size:13px;color:#cfe0ff;margin-top:10px}
+  #gate input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #2a3a60;background:#0b1328;color:#eaf2ff}
+  #gate .row{display:flex;gap:10px;align-items:center;margin-top:14px;justify-content:space-between}
+  #gate button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;border:none;border-radius:10px;padding:10px 14px;cursor:pointer;box-shadow:0 6px 16px #000a}
 </style>
 </head>
 <body>
   <header>
     <div class="wrap hero">
       <h1 class="title">Ñuble XR — Ciencia y Futuro Inclusivo (PIE & PAES)</h1>
-      <p class="subtitle">Portafolio unificado con 10 proyectos en VR/AR/3D + scripts (Sentinel‑1/DEM).</p>
+      <p class="subtitle">Portafolio con 10 proyectos VR/AR/3D + “células” y trivias interactivas.</p>
       <div class="badges"><span class="badge">10 proyectos</span><span class="badge">WebXR</span><span class="badge">PIE & PAES</span><span class="badge">Listos para clase</span></div>
-      <div id="collab-note">Proyecto en colaboración con <strong>Belén Acuña</strong> (PIE) en la <strong>Sala SEM Tecnológica</strong>: luces, 2 estaciones HTC VR, pantalla táctil gigante y 15 Oculus Quest 2.</div>
-      <div class="toggle-row" style="gap:8px;margin-top:10px">
-        <a class="btn" href="javascript:void(0)" onclick="toggleNote()">Mostrar/Ocultar nota</a>
-        <div id="admin-link" style="display:none"><a class="btn" href="acciones.html">⚙️ Acciones (admin)</a></div>
-      
+      <div id="collab-note">Proyecto colaborativo con <strong>Belén Acuña</strong> (PIE, Sala SEM Tecnológica: 2 estaciones HTC VR, pantalla táctil gigante y 15 Oculus Quest 2).</div>
       <div class="ribbon"></div>
       <div class="cta-row">
         <a class="cta" href="acciones.html"><span class="icon"></span> Panel de acciones</a>
         <a class="cta" href="#proyectos"><span class="icon"></span> Ver proyectos</a>
+        <div id="admin-link" style="display:none"><a class="cta" href="acciones.html"><span class="icon"></span> ⚙️ Acciones (admin)</a></div>
       </div>
     </div>
   </header>
 
   <main class="wrap">
-    <section id="proyectos" class="grid">
-      
-      <article class="card">
-        <div class="top">
-          <img src="https://source.unsplash.com/featured/?satellite,radar,earth" alt="1. Mapa VR Ñuble (Radar)" class="thumb"/>
-        </div>
-        <div class="card-body">
-          <h3>1. Mapa VR Ñuble (Radar)</h3>
-          <p>PIE: contrastes radar ↔ visión; PAES: lectura de capas.</p>
-          <div class="actions">
-            <a class="btn" data-proj-folder="nuble-mapa-radar-vr" href="#">\1<span class="icon"></span> Ir al proyecto\2</a> <a class="btn" href="#" onclick="alert(\'Abre el proyecto y presiona el botón ❓ Ayuda en la barra superior.\'); return false;">❓ Ayuda</a> <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
-          </div>
-        </div>
-      </article>
-    
-
-      <article class="card">
-        <div class="top">
-          <img src="https://source.unsplash.com/featured/?flood,river,aerial" alt="2. Inundaciones y crecidas" class="thumb"/>
-        </div>
-        <div class="card-body">
-          <h3>2. Inundaciones y crecidas</h3>
-          <p>PIE: iconos grandes; PAES: interpretación de inundación.</p>
-          <div class="actions">
-            <a class="btn" data-proj-folder="nuble-inundaciones-vr" href="#">\1<span class="icon"></span> Ir al proyecto\2</a> <a class="btn" href="#" onclick="alert(\'Abre el proyecto y presiona el botón ❓ Ayuda en la barra superior.\'); return false;">❓ Ayuda</a> <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
-          </div>
-        </div>
-      </article>
-    
-
-      <article class="card">
-        <div class="top">
-          <img src="https://source.unsplash.com/featured/?wildfire,forest,aerial" alt="3. Incendios y recuperación" class="thumb"/>
-        </div>
-        <div class="card-body">
-          <h3>3. Incendios y recuperación</h3>
-          <p>PIE: paleta accesible; PAES: severidad y recuperación.</p>
-          <div class="actions">
-            <a class="btn" data-proj-folder="nuble-incendios-vr" href="#">\1<span class="icon"></span> Ir al proyecto\2</a> <a class="btn" href="#" onclick="alert(\'Abre el proyecto y presiona el botón ❓ Ayuda en la barra superior.\'); return false;">❓ Ayuda</a> <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
-          </div>
-        </div>
-      </article>
-    
-
-      <article class="card">
-        <div class="top">
-          <img src="https://source.unsplash.com/featured/?urban,expansion,city,aerial" alt="4. Cambio de uso de suelo" class="thumb"/>
-        </div>
-        <div class="card-body">
-          <h3>4. Cambio de uso de suelo</h3>
-          <p>PIE: cambio ON/OFF; PAES: análisis temporal ΔdB.</p>
-          <div class="actions">
-            <a class="btn" data-proj-folder="nuble-cambio-uso-vr" href="#">\1<span class="icon"></span> Ir al proyecto\2</a> <a class="btn" href="#" onclick="alert(\'Abre el proyecto y presiona el botón ❓ Ayuda en la barra superior.\'); return false;">❓ Ayuda</a> <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
-          </div>
-        </div>
-      </article>
-    
-
-      <article class="card">
-        <div class="top">
-          <img src="https://source.unsplash.com/featured/?coastal,marsh,aerial" alt="5. Costas y humedales" class="thumb"/>
-        </div>
-        <div class="card-body">
-          <h3>5. Costas y humedales</h3>
-          <p>PIE: texto claro; PAES: dinámica de playa y humedales.</p>
-          <div class="actions">
-            <a class="btn" data-proj-folder="nuble-costas-humedales-vr" href="#">\1<span class="icon"></span> Ir al proyecto\2</a> <a class="btn" href="#" onclick="alert(\'Abre el proyecto y presiona el botón ❓ Ayuda en la barra superior.\'); return false;">❓ Ayuda</a> <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
-          </div>
-        </div>
-      </article>
-    
-
-      <article class="card">
-        <div class="top">
-          <img src="https://source.unsplash.com/featured/?topography,map,contour" alt="6. InSAR deformación sísmica" class="thumb"/>
-        </div>
-        <div class="card-body">
-          <h3>6. InSAR deformación sísmica</h3>
-          <p>PIE: leyendas simples; PAES: franjas y desplazamientos.</p>
-          <div class="actions">
-            <a class="btn" data-proj-folder="nuble-insar-vr" href="#">\1<span class="icon"></span> Ir al proyecto\2</a> <a class="btn" href="#" onclick="alert(\'Abre el proyecto y presiona el botón ❓ Ayuda en la barra superior.\'); return false;">❓ Ayuda</a> <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
-          </div>
-        </div>
-      </article>
-    
-
-      <article class="card">
-        <div class="top">
-          <img src="https://source.unsplash.com/featured/?ships,traffic,ocean,aerial" alt="7. Tráfico marítimo / Acuicultura" class="thumb"/>
-        </div>
-        <div class="card-body">
-          <h3>7. Tráfico marítimo / Acuicultura</h3>
-          <p>PIE: AR colaborativa; PAES: detección (CFAR simple).</p>
-          <div class="actions">
-            <a class="btn" data-proj-folder="nuble-maritimo-vr-ar" href="#">\1<span class="icon"></span> Ir al proyecto\2</a> <a class="btn" href="#" onclick="alert(\'Abre el proyecto y presiona el botón ❓ Ayuda en la barra superior.\'); return false;">❓ Ayuda</a> <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
-          </div>
-        </div>
-      </article>
-    
-
-      <article class="card">
-        <div class="top">
-          <img src="https://source.unsplash.com/featured/?glacier,ice,aerial" alt="8. Glaciares e hídrica" class="thumb"/>
-        </div>
-        <div class="card-body">
-          <h3>8. Glaciares e hídrica</h3>
-          <p>PIE: leyenda de cambio; PAES: hipsometría ↔ agua.</p>
-          <div class="actions">
-            <a class="btn" data-proj-folder="andes-glaciares-vr-ar" href="#">\1<span class="icon"></span> Ir al proyecto\2</a> <a class="btn" href="#" onclick="alert(\'Abre el proyecto y presiona el botón ❓ Ayuda en la barra superior.\'); return false;">❓ Ayuda</a> <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
-          </div>
-        </div>
-      </article>
-    
-
-      <article class="card">
-        <div class="top">
-          <img src="https://source.unsplash.com/featured/?solar,farm,aerial" alt="9. Energía y riesgos" class="thumb"/>
-        </div>
-        <div class="card-body">
-          <h3>9. Energía y riesgos</h3>
-          <p>PIE: categorías nítidas; PAES: criterios de riesgo/energía.</p>
-          <div class="actions">
-            <a class="btn" data-proj-folder="nuble-energia-riesgos-vr-ar" href="#">\1<span class="icon"></span> Ir al proyecto\2</a> <a class="btn" href="#" onclick="alert(\'Abre el proyecto y presiona el botón ❓ Ayuda en la barra superior.\'); return false;">❓ Ayuda</a> <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
-          </div>
-        </div>
-      </article>
-    
-
-      <article class="card">
-        <div class="top">
-          <img src="https://source.unsplash.com/featured/?farmland,fields,aerial" alt="10. Agricultura inteligente" class="thumb"/>
-        </div>
-        <div class="card-body">
-          <h3>10. Agricultura inteligente</h3>
-          <p>PIE: anomalía; PAES: priorización de riego.</p>
-          <div class="actions">
-            <a class="btn" data-proj-folder="nuble-agri-inteligente-vr-ar" href="#">\1<span class="icon"></span> Ir al proyecto\2</a> <a class="btn" href="#" onclick="alert(\'Abre el proyecto y presiona el botón ❓ Ayuda en la barra superior.\'); return false;">❓ Ayuda</a> <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
-          </div>
-        </div>
-      </article>
-    
-    </section>
+    <section id="proyectos" class="grid"></section>
   </main>
 
   <div id="gate">
@@ -222,22 +82,37 @@
     </div>
   </div>
 
-  <script>
-  document.addEventListener('DOMContentLoaded', ()=>{
-    const ok = localStorage.getItem('nxr_auth')==='1';
-    const g = document.getElementById('gate');
-    if(!ok){{ document.body.classList.add('gated'); g.style.display='flex'; }}
-    else {{ g.style.display='none'; }}
-  });
-  function toggleNote(){{ const n=document.getElementById('collab-note'); n.style.display = (n.style.display==='none')?'block':'none'; }}
-  document.addEventListener('contextmenu', e => {{ if(document.body.classList.contains('protected')) e.preventDefault(); }});
-  document.addEventListener('keydown', function(e) {{
-    if(!document.body.classList.contains('protected')) return;
-    if ((e.ctrlKey && (e.key==='u'||e.key==='U'||e.key==='s'||e.key==='S'||e.key==='c'||e.key==='C'))
-         || e.key==='F12' || (e.ctrlKey && e.shiftKey && (e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j'))) {{
-      e.preventDefault(); e.stopPropagation(); alert('Acción deshabilitada en modo presentación.'); return false;
-    }}
-  }}, true);
-  </script>
+<script>
+const cards = [['nuble-mapa-radar-vr', '1. Mapa VR Ñuble (Radar)', 'https://source.unsplash.com/featured/?satellite,radar,earth', 'Unsplash (tema: radar/satélite)', 'https://unsplash.com', 'PIE: contrastes radar ↔ visión; PAES: lectura de capas.'], ['nuble-inundaciones-vr', '2. Inundaciones y crecidas', 'https://source.unsplash.com/featured/?flood,river,aerial', 'Unsplash (tema: inundaciones)', 'https://unsplash.com', 'PIE: iconos grandes; PAES: interpretación de inundación.'], ['nuble-incendios-vr', '3. Incendios y recuperación', 'https://source.unsplash.com/featured/?wildfire,forest,aerial', 'Unsplash (tema: incendios)', 'https://unsplash.com', 'PIE: paleta accesible; PAES: severidad y recuperación.'], ['nuble-cambio-uso-vr', '4. Cambio de uso de suelo', 'https://source.unsplash.com/featured/?urban,expansion,city,aerial', 'Unsplash (tema: expansión urbana)', 'https://unsplash.com', 'PIE: cambio ON/OFF; PAES: análisis temporal ΔdB.'], ['nuble-costas-humedales-vr', '5. Costas y humedales', 'https://source.unsplash.com/featured/?coastal,marsh,aerial', 'Unsplash (tema: costas/humedales)', 'https://unsplash.com', 'PIE: texto claro; PAES: dinámica de playa y humedales.'], ['nuble-insar-vr', '6. InSAR deformación sísmica', 'https://upload.wikimedia.org/wikipedia/commons/4/45/NASA_Hectormine_Earthquake_Interferogram.jpg', 'NASA/ESA (interferograma Hector Mine)', 'https://commons.wikimedia.org/wiki/File:NASA_Hectormine_Earthquake_Interferogram.jpg', 'PIE: leyendas simples; PAES: franjas y desplazamientos.'], ['nuble-maritimo-vr-ar', '7. Tráfico marítimo / Acuicultura', 'https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2016/01/satellite-ais-based_map_of_global_ship_traffic/15830712-1-eng-GB/Satellite-AIS-based_map_of_global_ship_traffic.jpg', 'ESA (AIS tráfico marítimo)', 'https://www.esa.int/ESA_Multimedia/Images/2016/01/Satellite-AIS-based_map_of_global_ship_traffic', 'PIE: AR colaborativa; PAES: detección (CFAR).'], ['andes-glaciares-vr-ar', '8. Glaciares e hídrica', 'https://source.unsplash.com/featured/?glacier,ice,aerial', 'Unsplash (tema: glaciares)', 'https://unsplash.com', 'PIE: leyenda de cambio; PAES: hipsometría ↔ agua.'], ['nuble-energia-riesgos-vr-ar', '9. Energía y riesgos', 'https://source.unsplash.com/featured/?solar,farm,aerial', 'Unsplash (tema: energía solar/eólica)', 'https://unsplash.com', 'PIE: categorías nítidas; PAES: riesgo/energía.'], ['nuble-agri-inteligente-vr-ar', '10. Agricultura inteligente', 'https://source.unsplash.com/featured/?farmland,fields,aerial', 'Unsplash (tema: agricultura)', 'https://unsplash.com', 'PIE: anomalía; PAES: priorización de riego.']];
+const grid = document.querySelector('#proyectos');
+grid.innerHTML = cards.map(([slug,title,img,creditText,creditUrl,note]) => `
+  <article class="card">
+    <img class="thumb" src="${img}" alt="${title}"/>
+    <div class="card-body">
+      <h3>${title}</h3>
+      <p>${note}</p>
+      <div style="margin-top:6px;font-size:12px;color:#9db0d6">Crédito: <a href="${creditUrl}" target="_blank" rel="noopener">${creditText}</a></div>
+      <div class="actions">
+        <a class="btn" data-proj-folder="${slug}" href="#"><span class="icon"></span> Ir al proyecto</a>
+        <a class="btn" href="#" onclick="alert('Abre el proyecto y presiona 🧩 Actividad o 🧠 Trivia.');return false;">❓ Ayuda</a>
+        <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
+      </div>
+    </div>
+  </article>
+`).join('');
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  const ok = localStorage.getItem('nxr_auth')==='1';
+  const g = document.getElementById('gate');
+  if(!ok){ document.body.classList.add('gated'); g.style.display='flex'; } else { g.style.display='none'; }
+});
+
+// context blockers only in protected mode (optional)
+document.addEventListener('contextmenu', e => { if(document.body.classList.contains('protected')) e.preventDefault(); });
+document.addEventListener('keydown', function(e){
+  if(!document.body.classList.contains('protected')) return;
+  if((e.ctrlKey&&(e.key==='u'||e.key==='U'||e.key==='s'||e.key==='S'||e.key==='c'||e.key==='C'))||e.key==='F12'||(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j'))){e.preventDefault();e.stopPropagation();alert('Acción deshabilitada en modo presentación.');return false;}
+}, true);
+</script>
 </body>
 </html>
