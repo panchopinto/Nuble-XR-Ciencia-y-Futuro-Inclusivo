@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Sobre el proyecto — Tráfico marítimo / Acuicultura</title>
+<style>
+  body{margin:0;background:#0a1020;color:#eaf2ff;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}
+  .hud{position:fixed;left:0;right:0;top:0;background:#0a1020cc;border-bottom:1px solid #1e2a44;padding:8px;display:flex;gap:8px;z-index:10}
+  .btn{background:linear-gradient(135deg,#6EE7F9,#A78BFA);border:0;border-radius:10px;padding:8px 12px;color:#0a1020;font-weight:800;text-decoration:none}
+  .modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:9999}
+  .card{background:#101a34;border:1px solid #223054;border-radius:14px;max-width:720px;width:92%;color:#cfe0ff;padding:16px}
+  .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+</style>
+</head><body>
+<div class="hud">
+  <a class="btn" href="#" onclick="NXRCells.load('cells/cells.json');return false;">🧩 Actividad</a>
+  <a class="btn" href="#" onclick="NXRQuiz.load('quiz/questions.json');return false;">🧠 Trivia</a>
+  <a class="btn" href="#" onclick="document.getElementById('infoModal').style.display='flex';return false;">ℹ️ Sobre el proyecto</a>
+</div>
+<div style="padding:80px 16px;max-width:900px;margin:0 auto;color:#a9b4d0">Esta es una página temporal sin escena 3D aún. Puedes usar las actividades, trivia e info mientras se integra el entorno.</div>
+<div class="modal" id="infoModal"><div class="card">
+  <h3>Sobre el proyecto — Tráfico marítimo / Acuicultura</h3><ul><li>Mapas de densidad AIS y detección SAR.</li><li>Células: detecta → clasifica → concluye.</li><li>Trivia sobre rutas y artefactos.</li></ul>
+  <div class="row"><button class="btn" onclick="document.getElementById('infoModal').style.display='none'">Cerrar</button></div>
+</div></div>
+<script src="quiz/quiz.js"></script><script src="cells/cells.js"></script>
+<script>window.NXRQuiz=window.NXRQuiz;window.NXRCells=window.NXRCells;</script>
+</body></html>

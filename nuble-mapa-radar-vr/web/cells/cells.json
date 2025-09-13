@@ -1,0 +1,19 @@
+[
+  {
+    "id": "c1",
+    "title": "Observa",
+    "task": "Acércate a una ladera y compara brillo entre ambas caras.",
+    "timer": 45,
+    "pie_tip": "Da un ejemplo 'brillante vs oscuro'."
+  },
+  {
+    "id": "c2",
+    "title": "Explora",
+    "task": "Revisa cumbres y valles: ¿dónde cambia más el tono?"
+  },
+  {
+    "id": "c3",
+    "title": "Concluye",
+    "task": "Formula una hipótesis sobre por qué cambia el brillo con la orientación."
+  }
+]

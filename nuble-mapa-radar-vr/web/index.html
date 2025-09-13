@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Mapa VR Ñuble (Radar) — Ñuble XR</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <style>
+    body { margin:0; font-family:system-ui, Segoe UI, Roboto, Arial, sans-serif; background:#000; color:#fff }
+    .hud { position:fixed; left:10px; top:10px; background:rgba(0,0,0,.55); padding:10px 12px; border-radius:10px; font-size:13px }
+    .hud a { color:#7fe0ff; text-decoration:none; margin-right:8px }
+  </style>
+
+  <style>
+    /* help-overlay */
+    .hud .btn{display:inline-block;background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;
+      padding:6px 10px;border-radius:10px;text-decoration:none;margin-left:6px}
+    .helpModal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:9999}
+    .helpCard{background:#101a34;border:1px solid #223054;border-radius:14px;max-width:560px;width:92%;color:#cfe0ff;padding:16px}
+    .helpCard h3{margin:0 0 8px 0}
+    .helpCard ul{margin:8px 0 0 18px}
+    .helpCard .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+    .helpCard button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;border:none;border-radius:10px;padding:8px 12px;cursor:pointer}
+  </style>
+
+
+  <style>
+    /* learn-ui */
+    .hud .btn{display:inline-block;background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;
+      padding:6px 10px;border-radius:10px;text-decoration:none;margin-left:6px}
+    .modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:9999}
+    .card{background:#101a34;border:1px solid #223054;border-radius:14px;max-width:620px;width:92%;color:#cfe0ff;padding:16px}
+    .card h3{margin:0 0 8px 0}
+    .card ol{margin:8px 0 0 18px}
+    .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+    .card button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;border:none;border-radius:10px;padding:8px 12px;cursor:pointer}
+  </style>
+
+
+  <style>
+    /* learn-ui-extended */
+    .hud .btn{display:inline-block;background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;
+      padding:6px 10px;border-radius:10px;text-decoration:none;margin-left:6px}
+    .modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:9999}
+    .card{background:#101a34;border:1px solid #223054;border-radius:14px;max-width:720px;width:92%;color:#cfe0ff;padding:16px}
+    .card h3{margin:0 0 6px 0}
+    .card ul{margin:6px 0 0 18px}
+    .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+    .card button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;border:none;border-radius:10px;padding:8px 12px;cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="hud">
+    <strong>Proyecto 1 — Mapa VR Ñuble (Radar)</strong><br/>
+    <a href="../../index.html">← Portada</a>
+    <a href="ar.html">AR</a>
+  
+    <a class="btn" href="#" onclick="showHelp();return false;">❓ Ayuda</a>
+    <a class="btn" href="#" onclick="showInfo();return false;">ℹ️ Info</a>
+  </div>
+
+  <div class="helpModal" id="helpModal"><div class="helpCard"><h3>Ayuda rápida</h3><ul><li>WASD para moverte, mouse para mirar.</li><li>Presiona el botón VR para inmersión en Quest.</li><li>Acércate y explora el relieve del terreno.</li></ul><div class="row"><button onclick="hideHelp()">Cerrar</button></div></div></div>
+
+  <div class="helpModal" id="infoModal"><div class="helpCard"><h3>Información</h3>
+  <p>Parte del portafolio Ñuble XR — Ciencia y Futuro Inclusivo (PIE &amp; PAES).</p>
+  <ul>
+    <li>Compatibilidad: Oculus Quest 2/3, Chrome/Edge, Android.</li>
+    <li>Uso educativo: escenas interactivas VR/AR y datos satelitales.</li>
+    <li>Créditos: Colaboración con Belén Acuña (PIE, Sala SEM).</li>
+  </ul>
+  <div class="row"><button onclick="hideInfo()">Cerrar</button></div></div>
+    <a class="btn" href="#" onclick="NXRCells.load('cells/cells.json');return false;">🧩 Actividad</a>
+    <a class="btn" href="#" onclick="NXRQuiz.load('quiz/questions.json');return false;">🧠 Trivia</a>
+  </div>
+
+  <div class="modal" id="cellsModal"><div class="card"><h3>Células</h3><div id="cellsBox">Cargando…</div><div class="row"><button onclick="NXRCells.hide()">Cerrar</button></div></div></div>
+  <div class="modal" id="quizModal"><div class="card"><h3>Trivia</h3><div id="quizBox">Cargando…</div><div class="row"><button onclick="NXRQuiz.hide()">Cerrar</button></div></div>
+    <a class="btn" href="#" onclick="NXRCells.load('cells/cells.json');return false;">🧩 Actividad</a>
+    <a class="btn" href="#" onclick="NXRQuiz.load('quiz/questions.json');return false;">🧠 Trivia</a>
+    <a class="btn" href="#" onclick="showInfo();return false;">ℹ️ Sobre el proyecto</a>
+  </div>
+
+  <div class="modal" id="infoModal"><div class="card"><h3>Sobre el proyecto — Mapa VR Ñuble (Radar)</h3>
+    <ul><li>Explora el relieve de Ñuble con textura y heightmap.</li><li>Por qué algunas laderas brillan más en radar (orientación/rugosidad).</li><li>Células: Observa → Explora → Concluye.</li><li>Trivia PAES-friendly con retroalimentación.</li></ul>
+    <div class="row"><button onclick="hideInfo()">Cerrar</button></div></div></div>
+
+  <div class="modal" id="cellsModal"><div class="card"><h3>Células</h3><div id="cellsBox">Cargando…</div><div class="row"><button onclick="NXRCells.hide()">Cerrar</button></div></div></div>
+  <div class="modal" id="quizModal"><div class="card"><h3>Trivia</h3><div id="quizBox">Cargando…</div><div class="row"><button onclick="NXRQuiz.hide()">Cerrar</button></div></div></div>
+
+  <a-scene renderer="colorManagement: true; antialias: true" background="color: #1a1a1a">
+    <!-- Luces -->
+    <a-entity light="type: ambient; intensity: 0.6"></a-entity>
+    <a-entity light="type: directional; intensity: 0.9" position="1 1 0"></a-entity>
+
+    <!-- Terreno OBJ -->
+    <a-entity id="terrain"
+              position="0 0 -20"
+              rotation="-20 0 0"
+              obj-model="obj: url(assets/terrain.obj)"
+              material="src: url(assets/colormap.png); roughness:0.9; metalness:0.0">
+    </a-entity>
+
+    <!-- Suelo y cielo -->
+    <a-entity geometry="primitive: circle; radius: 100" rotation="-90 0 0"
+              material="color: #0c0c10; roughness:1; metalness:0"></a-entity>
+    <a-sky color="#0c1016"></a-sky>
+
+    <!-- Cámara -->
+    <a-entity id="rig" position="0 6 20">
+      <a-entity camera look-controls wasd-controls="acceleration:20"></a-entity>
+    </a-entity>
+  </a-scene>
+
+  <script>
+    function showHelp(){ document.getElementById('helpModal').style.display='flex'; }
+    function hideHelp(){ document.getElementById('helpModal').style.display='none'; }
+    function showInfo(){ document.getElementById('infoModal').style.display='flex'; }
+    function hideInfo(){ document.getElementById('infoModal').style.display='none'; }
+  </script>
+<script src="quiz/quiz.js"></script>
+<script src="cells/cells.js"></script>
+
+<script>
+function showInfo(){ document.getElementById('infoModal').style.display='flex'; }
+function hideInfo(){ document.getElementById('infoModal').style.display='none'; }
+</script>
+
+<script>
+/* movement-upgrades */
+(function(){
+  const SPEED=0.12, FAST=0.4, RISE=0.12;
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const cam = document.querySelector('[camera]');
+    let dragging=false, lastX=0, lastY=0, yaw=0, pitch=0;
+    function move(dx,dy,dz){
+      if(!cam) return;
+      const el=cam.object3D;
+      el.position.x += dx;
+      el.position.y += dy;
+      el.position.z += dz;
+    }
+    document.addEventListener('keydown', (e)=>{
+      const fast = e.shiftKey;
+      const s = fast?FAST:SPEED;
+      if(e.key==='q' || e.key==='Q') move(0,-RISE,0);
+      if(e.key==='e' || e.key==='E') move(0, RISE,0);
+      if(e.key==='w' || e.key==='W') move(0,0,-s);
+      if(e.key==='s' || e.key==='S') move(0,0, s);
+      if(e.key==='a' || e.key==='A') move(-s,0,0);
+      if(e.key==='d' || e.key==='D') move( s,0,0);
+    });
+    // simple orbit-like mouse drag (desktop)
+    const canvas = document.querySelector('canvas');
+    if(canvas){
+      canvas.addEventListener('mousedown', (ev)=>{ dragging=true; lastX=ev.clientX; lastY=ev.clientY; });
+      window.addEventListener('mouseup', ()=> dragging=false);
+      window.addEventListener('mousemove', (ev)=>{
+        if(!dragging) return;
+        const dx = ev.clientX-lastX, dy = ev.clientY-lastY;
+        lastX=ev.clientX; lastY=ev.clientY;
+        yaw -= dx*0.002; pitch -= dy*0.002; pitch = Math.max(-1.2, Math.min(1.2, pitch));
+        const rot = document.querySelector('[camera]').object3D.rotation;
+        rot.y = yaw; rot.x = pitch;
+      });
+    }
+    // minimal touch gestures for AR anchor entity with id="terrain" or "[data-draggable]"
+    const target = document.getElementById('terrain') || document.querySelector('[data-draggable]');
+    let tStartDist=0, tStartScale=1, tStartRot=0;
+    let draggingTouch=false, tLastX=0, tLastY=0;
+    function dist(a,b){ const dx=a.clientX-b.clientX, dy=a.clientY-b.clientY; return Math.hypot(dx,dy); }
+    function angle(a,b){ return Math.atan2(b.clientY-a.clientY, b.clientX-a.clientX); }
+    window.addEventListener('touchstart', (e)=>{
+      if(!target) return;
+      if(e.touches.length===1){ draggingTouch=true; tLastX=e.touches[0].clientX; tLastY=e.touches[0].clientY; }
+      if(e.touches.length===2){ tStartDist=dist(e.touches[0], e.touches[1]); tStartRot=angle(e.touches[0], e.touches[1]); const s=target.object3D.scale; tStartScale=s.x; }
+    }, {passive:true});
+    window.addEventListener('touchmove', (e)=>{
+      if(!target) return;
+      if(e.touches.length===1 && draggingTouch){
+        const dx=e.touches[0].clientX-tLastX, dy=e.touches[0].clientY-tLastY;
+        tLastX=e.touches[0].clientX; tLastY=e.touches[0].clientY;
+        target.object3D.position.x += dx*0.0008;
+        target.object3D.position.z += dy*0.0008;
+      }
+      if(e.touches.length===2){
+        const d=dist(e.touches[0],e.touches[1]);
+        const a=angle(e.touches[0],e.touches[1]);
+        const scale = Math.max(0.1, Math.min(5, tStartScale*(d/tStartDist)));
+        target.object3D.scale.set(scale,scale,scale);
+        target.object3D.rotation.y += (a - tStartRot);
+        tStartRot=a; tStartDist=d;
+      }
+    }, {passive:true});
+    window.addEventListener('touchend', ()=>{ draggingTouch=false; });
+  });
+})();
+</script>
+
+</body>
+</html>
