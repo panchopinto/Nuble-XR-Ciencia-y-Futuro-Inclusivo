@@ -56,9 +56,10 @@
       <div id="collab-note">Proyecto colaborativo con <strong>Belén Acuña</strong> (PIE, Sala SEM Tecnológica: 2 estaciones HTC VR, pantalla táctil gigante y 15 Oculus Quest 2).</div>
       <div class="ribbon"></div>
       <div class="cta-row">
-        <a class="cta" href="acciones.html"><span class="icon"></span> Panel de acciones</a>
-        <a class="cta" href="#proyectos"><span class="icon"></span> Ver proyectos</a>
         <div id="admin-link" style="display:none"><a class="cta" href="acciones.html"><span class="icon"></span> ⚙️ Acciones (admin)</a></div>
+        
+        <a class="cta" href="#proyectos"><span class="icon"></span> Ver proyectos</a>
+        
       </div>
     </div>
   </header>
@@ -114,5 +115,17 @@ document.addEventListener('keydown', function(e){
   if((e.ctrlKey&&(e.key==='u'||e.key==='U'||e.key==='s'||e.key==='S'||e.key==='c'||e.key==='C'))||e.key==='F12'||(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j'))){e.preventDefault();e.stopPropagation();alert('Acción deshabilitada en modo presentación.');return false;}
 }, true);
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+  try{
+    if(localStorage.getItem("nxr_auth")==="1"){
+      var link = document.getElementById("admin-link");
+      if(link){ link.style.display = "block"; }
+    }
+  }catch(e){}
+});
+</script>
+
 </body>
 </html>
