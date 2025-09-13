@@ -11,6 +11,19 @@
     .hud a { color:#7fe0ff; text-decoration:none; margin-right:8px }
     .hint { position:fixed; bottom:14px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,.55); padding:8px 12px; border-radius:10px; font-size:13px }
   </style>
+
+  <style>
+    /* help-overlay */
+    .hud .btn{display:inline-block;background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;
+      padding:6px 10px;border-radius:10px;text-decoration:none;margin-left:6px}
+    .helpModal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:9999}
+    .helpCard{background:#101a34;border:1px solid #223054;border-radius:14px;max-width:560px;width:92%;color:#cfe0ff;padding:16px}
+    .helpCard h3{margin:0 0 8px 0}
+    .helpCard ul{margin:8px 0 0 18px}
+    .helpCard .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+    .helpCard button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;border:none;border-radius:10px;padding:8px 12px;cursor:pointer}
+  </style>
+
 </head>
 <body>
   <div class="hud">
@@ -18,7 +31,21 @@
     <a href="index.html">VR</a>
     <a href="../../index.html">← Portada</a>
   </div>
-  <div class="hint">Mueve el teléfono y toca para colocar el terreno.</div>
+  <div class="hint">Mueve el teléfono y toca para colocar el terreno.
+    <a class="btn" href="#" onclick="showHelp();return false;">❓ Ayuda</a>
+    <a class="btn" href="#" onclick="showInfo();return false;">ℹ️ Info</a>
+  </div>
+
+  <div class="helpModal" id="helpModal"><div class="helpCard"><h3>Ayuda rápida</h3><ul><li>Mueve el teléfono para detectar plano.</li><li>Toca la pantalla para colocar el terreno.</li><li>Usa ARCore/ARKit (Android/iOS compatibles).</li></ul><div class="row"><button onclick="hideHelp()">Cerrar</button></div></div></div>
+
+  <div class="helpModal" id="infoModal"><div class="helpCard"><h3>Información</h3>
+  <p>Parte del portafolio Ñuble XR — Ciencia y Futuro Inclusivo (PIE &amp; PAES).</p>
+  <ul>
+    <li>Compatibilidad: Oculus Quest 2/3, Chrome/Edge, Android.</li>
+    <li>Uso educativo: escenas interactivas VR/AR y datos satelitales.</li>
+    <li>Créditos: Colaboración con Belén Acuña (PIE, Sala SEM).</li>
+  </ul>
+  <div class="row"><button onclick="hideInfo()">Cerrar</button></div></div></div>
 
   <a-scene xr-mode-ui="enabled: true"
            webxr="optionalFeatures: hit-test, dom-overlay; overlayElement: .hud"
@@ -53,6 +80,13 @@
       document.querySelector('.hint').textContent = 'Terreno colocado. Puedes moverte alrededor.';
     });
   });
+  </script>
+
+  <script>
+    function showHelp(){ document.getElementById('helpModal').style.display='flex'; }
+    function hideHelp(){ document.getElementById('helpModal').style.display='none'; }
+    function showInfo(){ document.getElementById('infoModal').style.display='flex'; }
+    function hideInfo(){ document.getElementById('infoModal').style.display='none'; }
   </script>
 </body>
 </html>

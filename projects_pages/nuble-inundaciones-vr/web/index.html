@@ -12,6 +12,19 @@
     .panel{position:fixed;right:10px;top:10px;background:rgba(0,0,0,.55);padding:10px 12px;border-radius:10px;font-size:13px}
     .panel label{display:block;margin-top:6px}
   </style>
+
+  <style>
+    /* help-overlay */
+    .hud .btn{display:inline-block;background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;
+      padding:6px 10px;border-radius:10px;text-decoration:none;margin-left:6px}
+    .helpModal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:9999}
+    .helpCard{background:#101a34;border:1px solid #223054;border-radius:14px;max-width:560px;width:92%;color:#cfe0ff;padding:16px}
+    .helpCard h3{margin:0 0 8px 0}
+    .helpCard ul{margin:8px 0 0 18px}
+    .helpCard .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+    .helpCard button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-weight:800;border:none;border-radius:10px;padding:8px 12px;cursor:pointer}
+  </style>
+
 </head>
 <body>
   <div class="hud">
@@ -24,7 +37,21 @@
     <label><input type="radio" name="flood" value="pre" checked> Antes</label>
     <label><input type="radio" name="flood" value="post"> Después (crecida)</label>
     <label style="margin-top:8px">Opacidad agua: <input id="alpha" type="range" min="0" max="1" step="0.05" value="0.6"></label>
+  
+    <a class="btn" href="#" onclick="showHelp();return false;">❓ Ayuda</a>
+    <a class="btn" href="#" onclick="showInfo();return false;">ℹ️ Info</a>
   </div>
+
+  <div class="helpModal" id="helpModal"><div class="helpCard"><h3>Ayuda rápida</h3><ul><li>WASD para moverte, mouse para mirar.</li><li>Usa el panel derecho para alternar Antes/Después.</li><li>Ajusta la opacidad del agua con el control deslizante.</li></ul><div class="row"><button onclick="hideHelp()">Cerrar</button></div></div></div>
+
+  <div class="helpModal" id="infoModal"><div class="helpCard"><h3>Información</h3>
+  <p>Parte del portafolio Ñuble XR — Ciencia y Futuro Inclusivo (PIE &amp; PAES).</p>
+  <ul>
+    <li>Compatibilidad: Oculus Quest 2/3, Chrome/Edge, Android.</li>
+    <li>Uso educativo: escenas interactivas VR/AR y datos satelitales.</li>
+    <li>Créditos: Colaboración con Belén Acuña (PIE, Sala SEM).</li>
+  </ul>
+  <div class="row"><button onclick="hideInfo()">Cerrar</button></div></div></div>
 
   <a-scene renderer="colorManagement: true; antialias: true" background="color: #1a1a1a">
     <a-entity light="type: ambient; intensity: 0.6"></a-entity>
@@ -66,6 +93,13 @@
     pre.setAttribute('material','src: assets/flood_pre.png; transparent:true; opacity:'+(onPre?value:0)+'; color:#2ea3ff; blending:additive');
     post.setAttribute('material','src: assets/flood_post.png; transparent:true; opacity:'+(onPre?0:value)+'; color:#2ea3ff; blending:additive');
   });
+  </script>
+
+  <script>
+    function showHelp(){ document.getElementById('helpModal').style.display='flex'; }
+    function hideHelp(){ document.getElementById('helpModal').style.display='none'; }
+    function showInfo(){ document.getElementById('infoModal').style.display='flex'; }
+    function hideInfo(){ document.getElementById('infoModal').style.display='none'; }
   </script>
 </body>
 </html>
