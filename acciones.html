@@ -13,7 +13,17 @@
     .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
     button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
     .muted{color:#a9b4d0}
+  
+  <style>
+    /* admin-fab */
+    .adminFab{position:fixed;right:14px;bottom:14px;display:none;z-index:9998;
+      background:#101a34;border:1px solid #223054;border-radius:14px;box-shadow:0 10px 30px #000a;
+      padding:8px;gap:8px;align-items:center}
+    .adminFab button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;border:0;border-radius:10px;padding:8px 10px;font-weight:800;cursor:pointer}
+    .adminFab .email{font-size:12px;color:#cfe0ff;margin-right:6px}
   </style>
+
+</style>
 </head>
 <body>
   <div class="wrap">
@@ -41,5 +51,58 @@
     document.getElementById('btnLogout').onclick = ()=>{ localStorage.removeItem('nxr_auth'); localStorage.removeItem('nxr_email'); location.href='index.html'; };
   });
   </script>
+
+  <div class="adminFab" id="adminFab">
+    <span class="email" id="fabEmail"></span>
+    <button id="fabProtect">🛡️ Protegido</button>
+    <button onclick="location.href='acciones.html'">⚙️ Acciones</button>
+    <button id="fabLogout">🚪 Salir</button>
+  </div>
+  <script>
+  (function(){
+    function reveal(){
+      try{
+        const authed = localStorage.getItem('nxr_auth')==='1';
+        const email = (localStorage.getItem('nxr_email')||'').toLowerCase();
+        const allowed = (window.NXR_CONFIG && Array.isArray(NXR_CONFIG.allowedEmails)) ? NXR_CONFIG.allowedEmails.map(e=>e.toLowerCase()) : [];
+        const ok = authed && email && allowed.includes(email);
+        const fab = document.getElementById('adminFab');
+        const lab = document.getElementById('fabEmail');
+        if(!fab) return;
+        if(ok){
+          fab.style.display='flex';
+          if(lab) lab.textContent = email;
+        }else{
+          fab.style.display='none';
+        }
+      }catch(e){}
+    }
+    function syncProtectLabel(){
+      const on = localStorage.getItem('nxr_protect')==='1';
+      const btn = document.getElementById('fabProtect');
+      if(btn) btn.textContent = on ? '🛡️ Protegido ON' : '🛡️ Protegido OFF';
+      if(on){ document.body.classList.add('protected'); } else { document.body.classList.remove('protected'); }
+    }
+    document.addEventListener('DOMContentLoaded', ()=>{
+      reveal(); syncProtectLabel();
+      const p = document.getElementById('fabProtect');
+      const l = document.getElementById('fabLogout');
+      if(p) p.onclick = ()=>{ if(localStorage.getItem('nxr_protect')==='1'){ localStorage.removeItem('nxr_protect'); } else { localStorage.setItem('nxr_protect','1'); } syncProtectLabel(); };
+      if(l) l.onclick = ()=>{ localStorage.removeItem('nxr_auth'); localStorage.removeItem('nxr_email'); location.href='index.html'; };
+    });
+  })();
+  </script>
+
+
+<script>
+document.addEventListener('contextmenu', function(e){ if(document.body.classList.contains('protected')) e.preventDefault(); }, true);
+document.addEventListener('keydown', function(e){
+  if(!document.body.classList.contains('protected')) return;
+  if ((e.ctrlKey && (e.key==='u'||e.key==='U'||e.key==='s'||e.key==='S'||e.key==='c'||e.key==='C'))
+       || e.key==='F12' || (e.ctrlKey && e.shiftKey && (e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j'))) {
+    e.preventDefault(); e.stopPropagation(); alert('Acción deshabilitada en modo presentación.'); return false;
+  }
+}, true);
+</script>
 </body>
 </html>
