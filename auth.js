@@ -45,3 +45,41 @@ document.addEventListener("DOMContentLoaded", ()=>Gate.init());
 /* Exponer CONFIG para la página de acciones (solo lectura) */
 window.NXR_CONFIG = CONFIG;
 window.NXR_Gate = Gate;
+
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  const ok = localStorage.getItem("nxr_auth")==="1";
+  if(ok){
+    const link = document.getElementById("acciones-link");
+    if(link) link.style.display = "inline-block";
+  }
+});
+
+
+Gate.showAdminLink = function(){
+  const link = document.getElementById("admin-link");
+  if(link){ link.style.display = "block"; }
+};
+
+// Mostrar el link si ya estaba autenticado al cargar
+document.addEventListener("DOMContentLoaded", ()=>{
+  if(localStorage.getItem("nxr_auth")==="1"){
+    Gate.showAdminLink();
+  }
+});
+
+// Hook: cuando se valida acceso en Gate.submit, también mostrar el link
+(function(origSubmit){
+  Gate.submit = async function(){
+    const email = document.getElementById("gate-email").value.trim().toLowerCase();
+    const code = document.getElementById("gate-code").value.trim();
+    if(!CONFIG.allowedEmails.includes(email)){ alert("Correo no autorizado"); return; }
+    const h = await Gate.sha256(code);
+    if(h !== CONFIG.accessCodeHash){ alert("Código incorrecto"); return; }
+    localStorage.setItem("nxr_auth","1");
+    localStorage.setItem("nxr_email", email);
+    document.body.classList.remove("gated");
+    const gate = document.getElementById("gate"); if(gate) gate.style.display = "none";
+    Gate.showAdminLink();
+  }
+})(Gate.submit);
