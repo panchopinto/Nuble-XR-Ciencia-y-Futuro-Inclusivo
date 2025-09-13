@@ -1,9 +1,6 @@
 // Acceso privado — Ñuble XR
-// Configuración de acceso (personaliza antes de publicar)
 const CONFIG = {
-  // Hash SHA-256 del código de acceso (ejemplo: PanchoPintoYBelenAcuna)
   accessCodeHash: "3bdb5332730e51e13685e5f1390cbd86d9634658d3f156689a3d056028a47c70",
-  // Whitelist de correos permitidos
   allowedEmails: [
     "franciscopinto@liceosannicolas.cl",
     "belenacuna@liceosannicolas.cl",
@@ -24,62 +21,51 @@ const Gate = {
     if(!CONFIG.allowedEmails.includes(email)){ alert("Correo no autorizado"); return; }
     const h = await Gate.sha256(code);
     if(h !== CONFIG.accessCodeHash){ alert("Código incorrecto"); return; }
-    // OK
     localStorage.setItem("nxr_auth","1");
     localStorage.setItem("nxr_email", email);
     document.body.classList.remove("gated");
     const gate = document.getElementById("gate"); if(gate) gate.style.display = "none";
-  },
-  init(){
-    const ok = localStorage.getItem("nxr_auth")==="1";
-    if(!ok){
-      document.body.classList.add("gated");
-      const gate = document.getElementById("gate"); if(gate) gate.style.display = "flex";
-    }
+    Gate.showAdminLink && Gate.showAdminLink();
   }
 };
 
-document.addEventListener("DOMContentLoaded", ()=>Gate.init());
+// Base público (GitHub Pages del repo)
+window.NXR_PUBLIC_BASE = "https://panchopinto.github.io/Nuble-XR-Ciencia-y-Futuro-Inclusivo";
 
-
-/* Exponer CONFIG para la página de acciones (solo lectura) */
-window.NXR_CONFIG = CONFIG;
-window.NXR_Gate = Gate;
-
-
-document.addEventListener("DOMContentLoaded", ()=>{
-  const ok = localStorage.getItem("nxr_auth")==="1";
-  if(ok){
-    const link = document.getElementById("acciones-link");
-    if(link) link.style.display = "inline-block";
+// Linker: rehace los links "Ver proyecto" para usar PUBLIC_BASE
+window.NXR_Linker = {
+  apply(){
+    const base = window.NXR_PUBLIC_BASE || '';
+    document.querySelectorAll('a[data-proj-folder]').forEach(a => {
+      const folder = a.getAttribute('data-proj-folder');
+      a.href = base.replace(/\/$/,'') + '/projects_pages/' + folder + '/index.html';
+    });
   }
-});
+};
 
+// Modo demo protegido
+window.NXR_Protect = (function(){
+  function apply(){
+    const on = localStorage.getItem('nxr_protect')==='1';
+    document.body.classList.toggle('protected', on);
+  }
+  function enable(){ localStorage.setItem('nxr_protect','1'); apply(); }
+  function disable(){ localStorage.removeItem('nxr_protect'); apply(); }
+  return {apply, enable, disable};
+})();
 
+// Mostrar link admin si autenticado
 Gate.showAdminLink = function(){
   const link = document.getElementById("admin-link");
   if(link){ link.style.display = "block"; }
 };
 
-// Mostrar el link si ya estaba autenticado al cargar
 document.addEventListener("DOMContentLoaded", ()=>{
-  if(localStorage.getItem("nxr_auth")==="1"){
-    Gate.showAdminLink();
-  }
+  if(localStorage.getItem("nxr_auth")==="1"){ Gate.showAdminLink(); }
+  try{ NXR_Protect.apply(); }catch(e){}
+  try{ NXR_Linker.apply(); }catch(e){}
 });
 
-// Hook: cuando se valida acceso en Gate.submit, también mostrar el link
-(function(origSubmit){
-  Gate.submit = async function(){
-    const email = document.getElementById("gate-email").value.trim().toLowerCase();
-    const code = document.getElementById("gate-code").value.trim();
-    if(!CONFIG.allowedEmails.includes(email)){ alert("Correo no autorizado"); return; }
-    const h = await Gate.sha256(code);
-    if(h !== CONFIG.accessCodeHash){ alert("Código incorrecto"); return; }
-    localStorage.setItem("nxr_auth","1");
-    localStorage.setItem("nxr_email", email);
-    document.body.classList.remove("gated");
-    const gate = document.getElementById("gate"); if(gate) gate.style.display = "none";
-    Gate.showAdminLink();
-  }
-})(Gate.submit);
+// Exponer para acciones.html
+window.NXR_CONFIG = CONFIG;
+window.NXR_Gate = Gate;
