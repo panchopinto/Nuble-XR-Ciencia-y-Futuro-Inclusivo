@@ -1,0 +1,19 @@
+[
+  {
+    "id": "c1",
+    "title": "Identifica",
+    "task": "Señala 2 áreas con mayor severidad.",
+    "timer": 45
+  },
+  {
+    "id": "c2",
+    "title": "Compara",
+    "task": "Busca señales de rebrote (NDVI).",
+    "timer": 60
+  },
+  {
+    "id": "c3",
+    "title": "Concluye",
+    "task": "Hipótesis sobre factores que influyen en la recuperación."
+  }
+]

@@ -1,81 +1,25 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Tráfico marítimo y acuicultura — VR</title>
-  <link rel="stylesheet" href="css/styles.css"/>
-  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-  <script defer src="js/vr.js"></script>
-
-  <style>
-    * { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; }
-    img { -webkit-user-drag:none; -khtml-user-drag:none; -moz-user-drag:none; -o-user-drag:none; user-drag:none; pointer-events:none; }
-  </style>
-
-</head>
-<body>
-  <a-scene renderer="antialias: true" background="color:#03121e">
-    <a-assets>
-      <img id="ocean" src="assets/ocean_tex.png">
-      <img id="mask" src="assets/mask_vessels.png">
-      <img id="heat" src="assets/heatmap.png">
-    </a-assets>
-
-    <!-- luces -->
-    <a-entity light="type: ambient; intensity: 0.9"></a-entity>
-    <a-entity light="type: directional; intensity: 0.7" position="0 2 1"></a-entity>
-
-    <!-- Mar animado (shader simple con desplazamiento) -->
-    <a-entity id="sea" position="-0.5 0 -1.5" rotation="-90 0 0">
-      <a-plane id="sea-plane" width="1.6" height="1.0" material="src:#ocean; repeat:2 2; opacity:0.95"></a-plane>
-    </a-entity>
-
-    <!-- Overlays detecciones -->
-    <a-entity id="ov-mask" position="-0.5 0.001 -1.5" rotation="-90 0 0" visible="true">
-      <a-plane width="1.6" height="1.0" material="src:#mask; transparent:true; opacity:0.8; color:#ff5252"></a-plane>
-    </a-entity>
-    <a-entity id="ov-heat" position="-0.5 0.002 -1.5" rotation="-90 0 0" visible="false">
-      <a-plane width="1.6" height="1.0" material="src:#heat; transparent:true; opacity:0.8"></a-plane>
-    </a-entity>
-
-    <!-- Cámara -->
-    <a-entity camera wasd-controls look-controls position="0 1.6 0"></a-entity>
-
-    <!-- UI -->
-    <a-entity position="-0.75 1.35 -1" text="value: Tráfico marítimo / Acuicultura — VR; width: 1.8; color:#fff"></a-entity>
-    <a-entity id="btn-mask" class="ui-btn" geometry="primitive: plane; width: 0.45; height: 0.1"
-              material="color:#e74c3c" position="-0.75 1.2 -1" text="value:Detecciones ON/OFF; align:center; width:2"></a-entity>
-    <a-entity id="btn-heat" class="ui-btn" geometry="primitive: plane; width: 0.45; height: 0.1"
-              material="color:#f1c40f" position="-0.25 1.2 -1" text="value:Heatmap ON/OFF; align:center; width:2"></a-entity>
-  </a-scene>
-
-  <script>
-  // Desactivar clic derecho y combinaciones comunes de copiar/inspeccionar
-  document.addEventListener('contextmenu', e => e.preventDefault());
-  document.addEventListener('keydown', function(e) {
-    if ((e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.key === 'c' || e.key === 'C'))
-        || e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j'))) {
-      e.preventDefault();
-      e.stopPropagation();
-      alert("Acción deshabilitada en modo presentación.");
-      return false;
-    }
-  }, true);
-  </script>
-
-
-  <script>
-    // Forzar que ninguna imagen sea "draggable" y bloquear arrastre/selección
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('img, video, canvas').forEach(el => {
-        el.setAttribute('draggable', 'false');
-      });
-      document.addEventListener('dragstart', e => e.preventDefault(), true);
-      document.addEventListener('selectstart', e => e.preventDefault(), true);
-      document.addEventListener('copy', e => { e.preventDefault(); alert('Acción deshabilitada en modo presentación.'); }, true);
-    });
-  </script>
-
-</body>
-</html>
+<html lang="es"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Sobre el proyecto — Tráfico marítimo / Acuicultura</title>
+<style>
+  body{margin:0;background:#0a1020;color:#eaf2ff;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}
+  .hud{position:fixed;left:0;right:0;top:0;background:#0a1020cc;border-bottom:1px solid #1e2a44;padding:8px;display:flex;gap:8px;z-index:10}
+  .btn{background:linear-gradient(135deg,#6EE7F9,#A78BFA);border:0;border-radius:10px;padding:8px 12px;color:#0a1020;font-weight:800;text-decoration:none}
+  .modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:9999}
+  .card{background:#101a34;border:1px solid #223054;border-radius:14px;max-width:720px;width:92%;color:#cfe0ff;padding:16px}
+  .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+</style>
+</head><body>
+<div class="hud">
+  <a class="btn" href="#" onclick="NXRCells.load('cells/cells.json');return false;">🧩 Actividad</a>
+  <a class="btn" href="#" onclick="NXRQuiz.load('quiz/questions.json');return false;">🧠 Trivia</a>
+  <a class="btn" href="#" onclick="document.getElementById('infoModal').style.display='flex';return false;">ℹ️ Sobre el proyecto</a>
+</div>
+<div style="padding:80px 16px;max-width:900px;margin:0 auto;color:#a9b4d0">Esta es una página temporal sin escena 3D aún. Puedes usar las actividades, trivia e info mientras se integra el entorno.</div>
+<div class="modal" id="infoModal"><div class="card">
+  <h3>Sobre el proyecto — Tráfico marítimo / Acuicultura</h3><ul><li>Mapas de densidad AIS y detección SAR.</li><li>Células: detecta → clasifica → concluye.</li><li>Trivia sobre rutas y artefactos.</li></ul>
+  <div class="row"><button class="btn" onclick="document.getElementById('infoModal').style.display='none'">Cerrar</button></div>
+</div></div>
+<script src="quiz/quiz.js"></script><script src="cells/cells.js"></script>
+<script>window.NXRQuiz=window.NXRQuiz;window.NXRCells=window.NXRCells;</script>
+</body></html>

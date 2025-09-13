@@ -1,0 +1,13 @@
+[
+  {
+    "id": "andes-glaciares-vr-ar_q1",
+    "type": "mc",
+    "prompt": "Pregunta 1 del proyecto.",
+    "options": [
+      "A",
+      "B",
+      "C"
+    ],
+    "answer": 0
+  }
+]

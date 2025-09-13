@@ -1,0 +1,24 @@
+[
+  {
+    "id": "p4_q1",
+    "type": "mc",
+    "prompt": "Un aumento de superficies grises suele asociarse a…",
+    "options": [
+      "Urbanización",
+      "Reforestación",
+      "Inundación"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "p4_q2",
+    "type": "mc",
+    "prompt": "Para cuantificar cambio usas…",
+    "options": [
+      "Δ área",
+      "Color aleatorio",
+      "Azar"
+    ],
+    "answer": 0
+  }
+]

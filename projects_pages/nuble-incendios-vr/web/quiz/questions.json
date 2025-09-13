@@ -1,0 +1,24 @@
+[
+  {
+    "id": "p3_q1",
+    "type": "mc",
+    "prompt": "¿Qué indica un NDVI bajo inmediatamente después del incendio?",
+    "options": [
+      "Menor vegetación",
+      "Mayor humedad",
+      "Más sombra"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "p3_q2",
+    "type": "mc",
+    "prompt": "¿Cuál signo sugiere recuperación?",
+    "options": [
+      "Aumento NDVI",
+      "Disminución NDVI",
+      "Sin cambio"
+    ],
+    "answer": 0
+  }
+]

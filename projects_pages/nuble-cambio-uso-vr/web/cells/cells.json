@@ -1,0 +1,18 @@
+[
+  {
+    "id": "c1",
+    "title": "Observa",
+    "task": "Activa capas multi-año y detecta 2 sectores nuevos."
+  },
+  {
+    "id": "c2",
+    "title": "Cuantifica",
+    "task": "Estima porcentaje de aumento en un barrio.",
+    "timer": 60
+  },
+  {
+    "id": "c3",
+    "title": "Concluye",
+    "task": "Hipótesis: ¿qué motiva este crecimiento?"
+  }
+]

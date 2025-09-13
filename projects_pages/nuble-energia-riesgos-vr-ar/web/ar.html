@@ -1,29 +1,25 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Agricultura inteligente — AR</title>
-  <link rel="stylesheet" href="css/styles.css"/>
-  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-  <script defer src="js/ar.js"></script>
-</head>
-<body>
-  <a-scene webxr="optionalFeatures: hit-test;" renderer="antialias: true" vr-mode-ui="enabled: false">
-    <a-assets>
-      <img id="tex" src="assets/moisture.png">
-      <img id="ov" src="assets/mask_moist.png">
-    </a-assets>
-
-    <a-entity id="reticle" geometry="primitive: ring; radiusInner: 0.03; radiusOuter: 0.04"
-              material="color:#39ff14; shader: flat" visible="false"></a-entity>
-
-    <a-entity id="map" visible="false">
-      <a-plane width="0.6" height="0.6" material="src:#tex"></a-plane>
-      <a-plane position="0 0.001 0" width="0.6" height="0.6" material="src:#ov; transparent:true; opacity:0.6; color:#33aaff"></a-plane>
-    </a-entity>
-
-    <a-entity camera position="0 1.6 0"></a-entity>
-  </a-scene>
-</body>
-</html>
+<html lang="es"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Sobre el proyecto AR — Energía y riesgos</title>
+<style>
+  body{margin:0;background:#0a1020;color:#eaf2ff;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}
+  .hud{position:fixed;left:0;right:0;top:0;background:#0a1020cc;border-bottom:1px solid #1e2a44;padding:8px;display:flex;gap:8px;z-index:10}
+  .btn{background:linear-gradient(135deg,#6EE7F9,#A78BFA);border:0;border-radius:10px;padding:8px 12px;color:#0a1020;font-weight:800;text-decoration:none}
+  .modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:9999}
+  .card{background:#101a34;border:1px solid #223054;border-radius:14px;max-width:720px;width:92%;color:#cfe0ff;padding:16px}
+  .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+</style>
+</head><body>
+<div class="hud">
+  <a class="btn" href="#" onclick="NXRCells.load('cells/cells.json');return false;">🧩 Actividad</a>
+  <a class="btn" href="#" onclick="NXRQuiz.load('quiz/questions.json');return false;">🧠 Trivia</a>
+  <a class="btn" href="#" onclick="document.getElementById('infoModal').style.display='flex';return false;">ℹ️ Sobre el proyecto</a>
+</div>
+<div style="padding:80px 16px;max-width:900px;margin:0 auto;color:#a9b4d0">Esta es una página temporal sin escena 3D aún. Puedes usar las actividades, trivia e info mientras se integra el entorno.</div>
+<div class="modal" id="infoModal"><div class="card">
+  <h3>Sobre el proyecto AR — Energía y riesgos</h3><ul><li>Mapa AR de sitios candidatos.</li><li>Debate selección multimodal.</li></ul>
+  <div class="row"><button class="btn" onclick="document.getElementById('infoModal').style.display='none'">Cerrar</button></div>
+</div></div>
+<script src="quiz/quiz.js"></script><script src="cells/cells.js"></script>
+<script>window.NXRQuiz=window.NXRQuiz;window.NXRCells=window.NXRCells;</script>
+</body></html>

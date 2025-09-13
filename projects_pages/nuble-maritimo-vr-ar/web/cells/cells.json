@@ -1,0 +1,18 @@
+[
+  {
+    "id": "c1",
+    "title": "Observa",
+    "task": "Describe dos rasgos clave."
+  },
+  {
+    "id": "c2",
+    "title": "Compara",
+    "task": "Indica un cambio que notaste.",
+    "timer": 45
+  },
+  {
+    "id": "c3",
+    "title": "Concluye",
+    "task": "Redacta una hipótesis breve."
+  }
+]
