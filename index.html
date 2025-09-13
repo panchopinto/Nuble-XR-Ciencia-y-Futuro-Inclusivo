@@ -8,6 +8,7 @@
 <script src="auth.js" defer></script>
 
 <style>
+  /* ===== Base ===== */
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
@@ -15,14 +16,14 @@
     font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
     background:#0a1020;
   }
+  .wrap{max-width:1100px;margin:0 auto;padding:20px}
 
-  /* ===== Header normal (se oculta cuando gated) ===== */
+  /* ===== Header (se oculta cuando gated) ===== */
   .appbar{
     position:sticky; top:0; z-index:20;
     background:linear-gradient(180deg,#0a1020ee,#0a1020cc,transparent);
     backdrop-filter:blur(8px); border-bottom:1px solid #1e2a44
   }
-  .wrap{max-width:1100px;margin:0 auto;padding:20px}
   .brand{display:flex;align-items:center;gap:12px}
   .logo{width:42px;height:42px;border-radius:12px;
         background:conic-gradient(from 45deg,#6EE7F9,#A78BFA,#F472B6,#FDE68A,#6EE7F9);
@@ -37,7 +38,7 @@
          border:1px solid #263454;border-radius:999px;
          padding:6px 12px;font-size:12px;color:#cfe0ff}
 
-  /* ===== Tarjetas de proyectos (se siguen viendo tras login) ===== */
+  /* ===== Cards de proyectos ===== */
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
         gap:18px;padding:20px}
   .card{background:rgba(255,255,255,0.06);border:1px solid #223054;
@@ -50,13 +51,6 @@
   .card p{margin:0;color:#a9b4d0;min-height:36px}
   .actions{display:flex;align-items:center;justify-content:space-between;
            margin-top:12px;gap:10px;flex-wrap:wrap}
-  .btn{display:inline-flex;align-items:center;gap:8px;
-       background:linear-gradient(135deg,#8bdcff,#ffffff33);
-       color:#0a1020;font-weight:800;padding:10px 14px;border-radius:12px;
-       border:1px solid #ffffff88;box-shadow:inset 0 0 0 1px #0002,0 6px 16px #0009}
-  .btn-ico{width:18px;height:18px;display:inline-block;vertical-align:middle;
-           border-radius:4px;background:#ffffffaa}
-  .btn-ico img{width:18px;height:18px;display:block;border-radius:4px}
   .tags span{display:inline-block;background:rgba(255,255,255,0.12);
              border:1px solid #2a3a60;padding:6px 10px;border-radius:999px;
              font-size:11px;color:#cfe0ff;margin-left:6px}
@@ -65,7 +59,32 @@
                 color:#0a1020;font-weight:800;font-size:12px;border-radius:999px;
                 padding:4px 8px;box-shadow:0 6px 16px #0009}
 
-  /* ====== Gate overlay ESTILO IMAGEN 2 ====== */
+  /* ===== Botones base + paleta sorpresa ===== */
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-weight:800; padding:10px 14px; border-radius:12px;
+    border:none; cursor:pointer; color:#0a1020;
+    box-shadow:0 6px 16px rgba(0,0,0,.35);
+    transition:transform .2s, box-shadow .2s;
+  }
+  .btn:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(0,0,0,.55);}
+  .btn-ico{width:18px;height:18px;display:inline-block;vertical-align:middle;
+           border-radius:4px;background:#ffffffaa}
+  .btn-ico img{width:18px;height:18px;display:block;border-radius:4px}
+
+  /* Gradientes vivos (10 combinaciones) */
+  .btn-grad-1{ background:linear-gradient(135deg,#6EE7F9,#A78BFA) }
+  .btn-grad-2{ background:linear-gradient(135deg,#34d399,#3b82f6) }
+  .btn-grad-3{ background:linear-gradient(135deg,#f472b6,#facc15) }
+  .btn-grad-4{ background:linear-gradient(135deg,#f87171,#fb923c) }
+  .btn-grad-5{ background:linear-gradient(135deg,#4ade80,#22d3ee) }
+  .btn-grad-6{ background:linear-gradient(135deg,#c084fc,#9333ea) }
+  .btn-grad-7{ background:linear-gradient(135deg,#fcd34d,#f87171) }
+  .btn-grad-8{ background:linear-gradient(135deg,#60a5fa,#2563eb) }
+  .btn-grad-9{ background:linear-gradient(135deg,#f43f5e,#ec4899) }
+  .btn-grad-10{background:linear-gradient(135deg,#2dd4bf,#14b8a6) }
+
+  /* ===== Overlay de Acceso (Imagen 2) ===== */
   #gate{
     position:fixed; inset:0; display:none; z-index:9999;
     align-items:center; justify-content:center;
@@ -94,7 +113,7 @@
   #gate .about ul{margin:10px 0 0 18px; color:#a9b4d0}
   #gate .lead{margin:0 0 12px; color:#a9b4d0}
 
-  /* Pastillas llamativas (con variantes de color) */
+  /* Pills llamativas con variantes */
   #gate .pill{
     font-size:12px; font-weight:600; color:#0a1020;
     border-radius:999px; padding:4px 12px;
@@ -125,7 +144,7 @@
     width:22px; height:22px; border-radius:6px; background:#ffffffaa; display:inline-flex; align-items:center; justify-content:center
   }
 
-  /* Ocultar header y difuminar el resto mientras está restringido */
+  /* Ocultar header/difuminar mientras está restringido */
   body.gated .appbar{display:none !important}
   body.gated main, body.gated .wrap{filter:blur(3px); pointer-events:none; user-select:none}
 </style>
@@ -138,12 +157,12 @@
       <div class="logo"></div>
       <div>
         <h1 class="title"><span>Ñuble XR</span> <span class="sup">PIE &amp; PAES</span></h1>
-        <p class="subtitle">Ciencia y Futuro Inclusivo — Proyectos VR/AR/3D</p>
+        <p class="subtitle">Ciencia y Futuro Inclusivo — 10 proyectos VR/AR/3D</p>
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
       <div class="badge">WebXR</div>
-      <div class="badge">Proyectos VR, RA Y 3D</div>
+      <div class="badge">10 proyectos</div>
       <div class="badge">Inclusivo</div>
     </div>
   </div>
@@ -153,10 +172,10 @@
   <section id="proyectos" class="grid"></section>
 </main>
 
-<!-- ====== Overlay de Acceso (Gate) ====== -->
+<!-- ===== Overlay de Acceso ===== -->
 <div id="gate">
   <div class="card">
-    <!-- Columna izquierda (presentación) -->
+    <!-- Columna izquierda -->
     <div class="about">
       <span class="pill pill-green">Innovación Educativa</span>
       <h1>Acceso privado</h1>
@@ -168,7 +187,7 @@
       </ul>
     </div>
 
-    <!-- Columna derecha (formulario) -->
+    <!-- Columna derecha: respeta IDs usados por auth.js -->
     <div>
       <h2>Ingresa</h2>
 
@@ -193,7 +212,7 @@
 </div>
 
 <script>
-/* ===== Render de tarjetas (igual que tu versión) ===== */
+/* ===== Data de proyectos ===== */
 const cards = [
   ["nuble-mapa-radar-vr","1. Mapa VR Ñuble (Radar)","PIE: contrastes radar ↔ visión; PAES: lectura de capas."],
   ["nuble-inundaciones-vr","2. Inundaciones y crecidas","PIE: iconos grandes; PAES: interpretación de inundación."],
@@ -206,8 +225,10 @@ const cards = [
   ["nuble-energia-riesgos-vr-ar","9. Energía y riesgos","PIE: categorías nítidas; PAES: riesgo/energía."],
   ["nuble-agri-inteligente-vr-ar","10. Agricultura inteligente","PIE: anomalía; PAES: priorización de riego."]
 ];
+
+/* ===== Render cards + gradientes por índice ===== */
 const grid=document.querySelector('#proyectos');
-grid.innerHTML=cards.map(([slug,title,note])=>`
+grid.innerHTML=cards.map(([slug,title,note],i)=>`
   <article class="card">
     <div class="corner-badge">XR</div>
     <img class="thumb" src="thumbs/icons/${slug}.svg" alt="${title}"/>
@@ -215,18 +236,18 @@ grid.innerHTML=cards.map(([slug,title,note])=>`
       <h3>${title}</h3>
       <p>${note}</p>
       <div class="actions">
-        <a class="btn" data-proj-folder="${slug}" href="#">
+        <a class="btn btn-grad-${(i%10)+1}" data-proj-folder="${slug}" href="#">
           <span class="btn-ico"><img src="thumbs/icons/${slug}.svg" alt="icono ${title}"/></span>
           <span>Ir al proyecto</span>
         </a>
-        <a class="btn" href="#" onclick="alert('Abre el proyecto y presiona 🧩 Actividad o 🧠 Trivia.');return false;">❓ Ayuda</a>
+        <a class="btn btn-grad-${((i+5)%10)+1}" href="#" onclick="alert('Abre el proyecto y presiona 🧩 Actividad o 🧠 Trivia.');return false;">❓ Ayuda</a>
         <span class="tags"><span>VR</span><span>AR</span><span>3D</span></span>
       </div>
     </div>
   </article>
 `).join('');
 
-/* ===== Mostrar gate cuando no hay sesión (auth.js maneja el submit) ===== */
+/* ===== Mostrar gate si no hay sesión (auth.js maneja submit) ===== */
 document.addEventListener('DOMContentLoaded',()=>{
   const ok=localStorage.getItem('nxr_auth')==='1';
   const g=document.getElementById('gate');
@@ -236,7 +257,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 
 <footer class="footer">
-  <div class="wrap">Portafolio unificado Ñuble XR · Proyecto colaborativo con Belén Acuña — Sala SEM2 (oculus Quest 2, estaciones HTC VR)</div>
+  <div class="wrap">Portafolio unificado Ñuble XR · Proyecto colaborativo con Belén Acuña — Sala SEM (15 Quest 2, 2 HTC VR, pantalla táctil)</div>
 </footer>
 </body>
 </html>
