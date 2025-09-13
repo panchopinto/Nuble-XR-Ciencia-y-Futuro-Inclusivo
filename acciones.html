@@ -14,6 +14,12 @@ button{background:linear-gradient(135deg,#6EE7F9,#A78BFA);color:#0a1020;font-wei
 .small{font-size:12px;color:#9db0d6}
 pre{white-space:pre-wrap;word-break:break-all;background:#0b1328;border:1px solid #2a3a60;border-radius:10px;padding:10px}
 </style>
+
+  <style>
+    * { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; }
+    img { -webkit-user-drag:none; -khtml-user-drag:none; -moz-user-drag:none; -o-user-drag:none; user-drag:none; pointer-events:none; }
+  </style>
+
 </head>
 <body>
 <div class="wrap">
@@ -103,5 +109,33 @@ window.addEventListener("DOMContentLoaded", ()=>{
   document.getElementById("confout").textContent = s;
 });
 </script>
+
+  <script>
+  // Desactivar clic derecho y combinaciones comunes de copiar/inspeccionar
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.key === 'c' || e.key === 'C'))
+        || e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j'))) {
+      e.preventDefault();
+      e.stopPropagation();
+      alert("Acción deshabilitada en modo presentación.");
+      return false;
+    }
+  }, true);
+  </script>
+
+
+  <script>
+    // Forzar que ninguna imagen sea "draggable" y bloquear arrastre/selección
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('img, video, canvas').forEach(el => {
+        el.setAttribute('draggable', 'false');
+      });
+      document.addEventListener('dragstart', e => e.preventDefault(), true);
+      document.addEventListener('selectstart', e => e.preventDefault(), true);
+      document.addEventListener('copy', e => { e.preventDefault(); alert('Acción deshabilitada en modo presentación.'); }, true);
+    });
+  </script>
+
 </body>
 </html>
