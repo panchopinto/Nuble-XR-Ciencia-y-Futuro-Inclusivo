@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="css/styles.css"/>
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script defer src="js/vr.js"></script>
+
+  <style>
+    * { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; }
+    img { -webkit-user-drag:none; -khtml-user-drag:none; -moz-user-drag:none; -o-user-drag:none; user-drag:none; pointer-events:none; }
+  </style>
+
 </head>
 <body>
   <a-scene renderer="antialias: true" background="color:#06121c">
@@ -39,5 +45,33 @@
     <a-entity id="legend" position="0.55 1.18 -1" geometry="primitive: plane; width: 0.45; height: 0.12"
               material="src:#legend-an; transparent:true; opacity:0.9" visible="false"></a-entity>
   </a-scene>
+
+  <script>
+  // Desactivar clic derecho y combinaciones comunes de copiar/inspeccionar
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.key === 'c' || e.key === 'C'))
+        || e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j'))) {
+      e.preventDefault();
+      e.stopPropagation();
+      alert("Acción deshabilitada en modo presentación.");
+      return false;
+    }
+  }, true);
+  </script>
+
+
+  <script>
+    // Forzar que ninguna imagen sea "draggable" y bloquear arrastre/selección
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('img, video, canvas').forEach(el => {
+        el.setAttribute('draggable', 'false');
+      });
+      document.addEventListener('dragstart', e => e.preventDefault(), true);
+      document.addEventListener('selectstart', e => e.preventDefault(), true);
+      document.addEventListener('copy', e => { e.preventDefault(); alert('Acción deshabilitada en modo presentación.'); }, true);
+    });
+  </script>
+
 </body>
 </html>

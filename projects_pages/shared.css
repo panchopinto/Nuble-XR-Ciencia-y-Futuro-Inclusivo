@@ -7,3 +7,7 @@ h1{margin:0 0 10px 0}
 .btn.alt{background:linear-gradient(135deg,#34D399,#ffffff33)}
 .btn.ghost{background:transparent;color:#eaf2ff;border-color:#2a3a60}
 .placeholder{height:320px;border:1px dashed #2a3a60;border-radius:12px;background:repeating-linear-gradient(45deg,#0f1730,#0f1730 10px,#101a34 10px,#101a34 20px)}
+
+/* Endurecer selección/arrastre a nivel de CSS compartido */
+*{-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
+img,video,canvas{pointer-events:none;-webkit-user-drag:none}
